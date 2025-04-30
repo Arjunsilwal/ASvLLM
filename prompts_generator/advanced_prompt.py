@@ -25,61 +25,28 @@ def compute_tcpa_dcpa(own_ship, other_ship, pixels_per_km):
     return tcpa, dcpa
 
 
-def classify_situation(own_ship, other_ship, pixels_per_km,
-                       head_on_threshold=15, overtaking_speed_diff=0.1):
-    # heading difference
-    hd = abs(((own_ship.heading - other_ship.heading) + math.pi) % (2 * math.pi) - math.pi)
-    if abs(math.degrees(hd) - 180) < head_on_threshold:
-        return "Head-on"
-
-    # relative bearing
-    dx = other_ship.x - own_ship.x
-    dy = other_ship.y - own_ship.y
-    abs_bearing = math.atan2(dy, dx)
-    rel = ((abs_bearing - own_ship.heading + math.pi) % (2 * math.pi)) - math.pi
-    rel_deg = math.degrees(rel)
-
-    # relative speed
-    rel_speed = (other_ship.speed - own_ship.speed) / pixels_per_km * 3600
-    # overtaking
-    if rel_speed > overtaking_speed_diff and abs(rel_deg) < 45:
-        return "Overtaking"
-
-    # crossing
-    if -90 <= rel_deg <= 90:
-        return "Crossing"
-
-    # default overtaking if faster
-    if rel_speed > overtaking_speed_diff:
-        return "Overtaking"
-    return "Crossing"
-
-
 def generate_vessel_prompt(vessels, pixels_per_km=1):
     prompt = (
-        "You are an expert maritime navigation AI. Provide COLREGs-compliant maneuvers."
-        " Include the following data for each vessel encounter."
-        " Respond ONLY with a JSON array of {id, situation, role, action}. No extra text.\n"
-        "Detailed Data Provided:\n"
-        "- Position (px), heading (°), speed (km/h)\n"
-        "- Relative bearing (°), distance (km), TCPA (s), DCPA (km) for each pair\n"
-        "- Computed situation: Head-on, Crossing, or Overtaking based on relative heading & speed.\n"
-        "Use this to decide the correct maneuver.\n\n"
+        "You are an expert maritime navigation AI. Provide COLREGs‐compliant maneuvers.\n"
+        "Strict rules for labeling encounters:\n"
+        "1) Head-on: vessels on reciprocal or near-reciprocal courses (bearing diff ≈ 180°) → both \"Give-way\" & action \"Alter course to starboard\".\n"
+        "2) Crossing: if vessel B is on vessel A’s starboard side (relative bearing 0°<θ<112.5°) → A is \"Give-way\", B is \"Stand-on\".\n"
+        "3) Overtaking: if one vessel is **faster** (speed diff >5 km/h) and **approaching from astern** (relative bearing >150° or <-150°) → faster is \"Give-way\" (action: alter course or slow), slower is \"Stand-on\".\n"
+        "Respond ONLY with a JSON array of objects {id, situation, role, action}, **exactly one entry per vessel**. Do not produce more than one element for any given id, and do not include any extra text.\n\n"
         "Vessels Data:\n"
     )
+
     for v in vessels:
-        speed_kmh = (v.speed / pixels_per_km * 3600) if pixels_per_km else 0
+        speed_kmh = (v.speed / pixels_per_km * 3600)
         prompt += f"- id: {id(v)}, pos: ({v.x:.1f},{v.y:.1f}), heading: {math.degrees(v.heading):.1f}°, speed: {speed_kmh:.1f} km/h\n"
         prompt += "  Other vessels:\n"
         for o in vessels:
-            if o is v:
-                continue
+            if o is v: continue
             dist_km = math.hypot(o.x - v.x, o.y - v.y) / pixels_per_km
             rb = calculate_relative_bearing(v, o)
             tcpa, dcpa = compute_tcpa_dcpa(v, o, pixels_per_km)
-            situation = classify_situation(v, o, pixels_per_km)
             prompt += (
-                f"    - id: {id(o)}, situation: {situation}, dist: {dist_km:.3f} km, relBearing: {rb:.1f}°, "
+                f"    - id: {id(o)}, dist: {dist_km:.3f} km, relBearing: {rb:.1f}°, "
                 f"TCPA: {tcpa:.1f}s, DCPA: {dcpa:.3f} km\n"
             )
     return prompt
