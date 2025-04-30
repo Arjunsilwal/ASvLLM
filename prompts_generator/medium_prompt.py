@@ -10,10 +10,11 @@ def calculate_relative_bearing(own_ship, target_ship):
     return math.degrees((-rel) % (2 * math.pi))
 
 
-def generate_multi_vessel_prompt(vessels, pixels_per_km=1):
-    prompt = ("""You are an expert maritime navigation AI applying the International Regulations for Preventing Collisions at Sea (COLREGs).
-    For each vessel below, return a JSON array of objects with exactly these keys:
-      id, situation, role, action, rationale
+def generate_vessel_prompt(vessels, pixels_per_km=1):
+    prompt = (""""You are an expert maritime navigation AI analyzing vessel encounters according to COLREGs.\n"
+        "For each vessel listed below, determine the situation, role, action, and a brief rationale.\n"
+        "Respond ONLY with a JSON array of objects {id, situation, role, action}, **exactly one entry per vessel**. Do not produce more than one element for any given id, and do not include any extra text.\n\n"
+        " Do not include any additional text.\n\n"
 
     Types:
       - situation: "Head-on", "Crossing", or "Overtaking"

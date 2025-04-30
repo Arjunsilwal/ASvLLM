@@ -57,8 +57,9 @@ class EventManager:
                             entity_manager.show_context_menu(event.pos, ["Delete Vessel"])
                             return
                     entity_manager.show_context_menu(event.pos,
-                                                     ["Create Vessel", "Create USS Tucker", "Create Head-On Scenario",
-                                                      "Create Cross Over Scenario", "Create Over Taking Scenario"])
+                                                     ["Create Vessel", "Head-On Scenario",
+                                                      "Cross Over Scenario", "Over Taking Scenario","Multi vessel Scenario",
+                                                      ])
 
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_m:  # Press 'm' to start movement

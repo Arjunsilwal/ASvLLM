@@ -2,51 +2,70 @@ import os
 import json
 import re
 from typing import Optional
-from openai import OpenAI  # this import should work once you have the 'openai' package installed
+from openai import OpenAI
 
-# --- Config ---
-OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
-OPENROUTER_API_KEY_ENV_VAR = "OPENROUTER_API_KEY"
-OPENROUTER_MODEL = "meta-llama/llama-4-maverick:free"
+# ─── CONFIG ────────────────────────────────────────────────────────────────────
+DEEPSEEK_BASE_URL = "https://api.deepseek.com/v1"
+DEEPSEEK_API_KEY_ENV = "DEEPSEEK_API_KEY"
+DEEPSEEK_MODEL = "deepseek-chat"
+
 YOUR_SITE_URL = "local_pygame_simulator"
 YOUR_APP_NAME = "VesselSim_COLREGs_Test"
 
-# --- Initialize OpenRouter client ---
-api_key = os.getenv(OPENROUTER_API_KEY_ENV_VAR)
+# DeepSeek pricing (per token)
+INPUT_TOKEN_PRICE = 0.55 / 1_000_000
+OUTPUT_TOKEN_PRICE = 2.19 / 1_000_000
+
+
+# ─── UTILS ─────────────────────────────────────────────────────────────────────
+def calculate_cost(prompt_tokens: int, completion_tokens: int) -> float:
+    return prompt_tokens * INPUT_TOKEN_PRICE + completion_tokens * OUTPUT_TOKEN_PRICE
+
+
+def _clean_response(content: str) -> str:
+    # strip markdown fences
+    text = content.strip()
+    if text.startswith("```"):
+        lines = text.splitlines()[1:]
+        if lines and lines[-1].startswith("```"):
+            lines = lines[:-1]
+        text = "\n".join(lines).strip()
+    # drop stray "json" markers
+    return re.sub(r'^(?:json)?\s*|\s*$', "", text,
+                  flags=re.IGNORECASE | re.MULTILINE).strip()
+
+
+# ─── CLIENT SETUP ───────────────────────────────────────────────────────────────
+api_key = os.getenv(DEEPSEEK_API_KEY_ENV)
 if not api_key:
-    print(f"FATAL ERROR: Environment variable '{OPENROUTER_API_KEY_ENV_VAR}' not set.")
+    print(f"FATAL ERROR: Environment variable '{DEEPSEEK_API_KEY_ENV}' not set.")
     client = None
 else:
-    client = OpenAI(
-        base_url=OPENROUTER_BASE_URL,
-        api_key=api_key,
-    )
-    print(f"API Key loaded from {OPENROUTER_API_KEY_ENV_VAR}.")
+    client = OpenAI(base_url=DEEPSEEK_BASE_URL, api_key=api_key)
+    print(f"[useLLm] DeepSeek API key loaded from {DEEPSEEK_API_KEY_ENV}.")
 
 
+# ─── ENTRYPOINT ────────────────────────────────────────────────────────────────
 def get_llm_decision(prompt: str) -> Optional[str]:
     """
-    Sends the prompt to OpenRouter via the OpenAI client.
-    Expects a JSON-object response (stringified).
-    Returns the pretty-printed JSON string, or None on error.
+    Sends the prompt to DeepSeek and returns a pretty‐printed JSON string,
+    or None on error.
     """
     if client is None:
-        print("ERROR: OpenRouter client not initialized.")
+        print("ERROR: DeepSeek client not initialized.")
+        return None
+    if not isinstance(prompt, str) or not prompt.strip():
+        print("ERROR: Prompt must be a non‐empty string.")
         return None
 
-    if not isinstance(prompt, str):
-        print(f"ERROR: Prompt must be a string, got {type(prompt)}")
-        return None
-
-    # --- Debug-print the prompt ---
-    print("\n===== Prompt Sent to LLM =====")
+    # show the prompt
+    print("\n===== Prompt Sent to DeepSeek =====")
     print(prompt)
-    print("==============================\n")
+    print("===================================\n")
 
     try:
-        # call the chat completion endpoint
-        completion = client.chat.completions.create(
-            model=OPENROUTER_MODEL,
+        resp = client.chat.completions.create(
+            model=DEEPSEEK_MODEL,
             messages=[{"role": "user", "content": prompt}],
             extra_headers={
                 "HTTP-Referer": YOUR_SITE_URL,
@@ -57,37 +76,33 @@ def get_llm_decision(prompt: str) -> Optional[str]:
             stream=False,
         )
     except Exception as e:
-        # catch *all* errors from the client
-        print(f"Error: LLM request failed: {e}")
+        print(f"Error: DeepSeek request failed: {e}")
         return None
 
-    # extract the raw content
+    # extract content
     try:
-        content = completion.choices[0].message.content
+        content = resp.choices[0].message.content
     except Exception as e:
-        print(f"Error: Unexpected completion structure: {e}")
+        print(f"Error: Unexpected DeepSeek response structure: {e}")
         return None
 
     if not content:
         print("Error: Empty content in LLM response.")
         return None
 
-    # --- Clean out Markdown fences or stray 'json' tokens ---
-    cleaned = content.strip()
-    if cleaned.startswith("```"):
-        lines = cleaned.splitlines()
-        lines = lines[1:]
-        if lines and lines[-1].startswith("```"):
-            lines = lines[:-1]
-        cleaned = "\n".join(lines).strip()
+    # if usage info is present, print estimated cost
+    if getattr(resp, "usage", None):
+        p_toks = resp.usage.prompt_tokens
+        c_toks = resp.usage.completion_tokens
+        cost = calculate_cost(p_toks, c_toks)
+        print(f"[DeepSeek] Prompt tokens: {p_toks}, Completion tokens: {c_toks}, Estimated cost: ${cost:.6f}")
 
-    cleaned = re.sub(r'^(?:json)?\s*|\s*$', "", cleaned, flags=re.IGNORECASE | re.MULTILINE).strip()
-
-    # --- Try parsing as JSON ---
+    # clean & debug-print
+    cleaned = _clean_response(content)
+    # try parsing
     try:
         data = json.loads(cleaned)
-        pretty = json.dumps(data, indent=2)
-        return pretty
+        return json.dumps(data, indent=2)
     except json.JSONDecodeError:
         print("Error: Failed to parse cleaned content as JSON.")
         print("Received:\n", cleaned)
