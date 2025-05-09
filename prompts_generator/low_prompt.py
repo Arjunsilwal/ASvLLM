@@ -13,22 +13,14 @@ def calculate_relative_bearing(own_ship, target_ship):
 
 
 def generate_vessel_prompt(vessels, pixels_per_km=1):
-    """
-    Generates a single prompt requesting COLREGs decisions for all vessels.
-    Returns a JSON array of objects, each with keys:
-      - id: integer (Python id of vessel)
-      - situation: "Head-on", "Crossing", or "Overtaking"
-      - role: "Give-Way", "Stand-On", or "N/A"
-      - action: one of [maintainCourseSpeed, alterCourseStarboard, alterCoursePort, reduceSpeed, passAstern, noActionRequired]
-      - rationale: brief explanation
-    """
-    prompt = (
-        "You are an expert maritime navigation AI analyzing vessel encounters according to COLREGs.\n"
-        "For each vessel listed below, determine the situation, role, action, and a brief rationale.\n"
-        "Respond ONLY with a JSON array of objects {id, situation, role, action}, **exactly one entry per vessel**. Do not produce more than one element for any given id, and do not include any extra text.\n\n"
+    prompt = ("""
+        "Ship navigation according to COLREGs.\n"
+        "For each vessel listed below, determine the situation, role, action\n"
+        "Respond ONLY with a JSON array of objects {id, situation, role, action}, **exactly one entry per vessel**. Do not produce more than one element for any given id\n\n"
         " Do not include any additional text.\n"
         "Vessels Data:"
-    )
+        """
+              )
 
     for v in vessels:
         speed_kmh = (v.speed / pixels_per_km * 3600) if pixels_per_km > 0 else 0

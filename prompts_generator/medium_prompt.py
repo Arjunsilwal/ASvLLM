@@ -11,9 +11,10 @@ def calculate_relative_bearing(own_ship, target_ship):
 
 
 def generate_vessel_prompt(vessels, pixels_per_km=1):
-    prompt = (""""You are an expert maritime navigation AI analyzing vessel encounters according to COLREGs.\n"
-        "For each vessel listed below, determine the situation, role, action, and a brief rationale.\n"
-        "Respond ONLY with a JSON array of objects {id, situation, role, action}, **exactly one entry per vessel**. Do not produce more than one element for any given id, and do not include any extra text.\n\n"
+    prompt = ("""
+        "Ship navigation according to COLREGs.\n"
+        "For each vessel listed below, determine the situation, role, action\n"
+        "Respond ONLY with a JSON array of objects {id, situation, role, action}, **exactly one entry per vessel**. Do not produce more than one element for any given id\n\n"
         " Do not include any additional text.\n\n"
 
     Types:
@@ -22,7 +23,7 @@ def generate_vessel_prompt(vessels, pixels_per_km=1):
       - action: "Alter course to starboard", "Alter course to port", "Reduce speed", or "Maintain course and speed"
 
     Strict rules:
-      1. Head-on (bearing ≈ 0° or 180°): both vessels → Give-way, action → "Alter course to starboard"
+      1. Head-on:  both vessels → Give-way, action → "Alter course to starboard"
       2. Crossing: vessel seeing the other on its starboard side → Give-way; other → Stand-on
       3. Overtaking: faster vessel → Give-way; slower → Stand-on
 

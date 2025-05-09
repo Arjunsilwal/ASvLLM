@@ -118,7 +118,7 @@ def multi_vessel_scenario(entity_manager, screen_width, screen_height):
     mid_y = screen_height / 2
     right_x = screen_width * 0.9
     top_x = screen_width / 2
-    top_y = screen_height * 0.3
+    top_y = screen_height * 0.2
     bottom_x = screen_width / 2
     bottom_y = screen_height * 0.9
 
@@ -140,3 +140,41 @@ def multi_vessel_scenario(entity_manager, screen_width, screen_height):
     vessel_bottom.heading = 0.0
 
     entity_manager.vessels.extend([vessel_left, vessel_right, vessel_bottom])
+
+
+def multi_vessel_scenario_2(entity_manager, screen_width, screen_height):
+    """
+        Clears existing vessels and creates three vessels at left, right, and bottom.
+        They will move:
+          - Left vessel heads east toward the right vessel.
+          - Right vessel heads west toward the left vessel.
+          - Bottom vessel heads north toward the midpoint of the top.
+        """
+    entity_manager.vessels.clear()
+
+    left_x = screen_width * 0.1
+    mid_y = screen_height / 2
+    right_x = screen_width * 0.9
+    top_x = screen_width / 2
+    top_y = screen_height * 0.2
+    bottom_x = screen_width / 2
+    bottom_y = screen_height * 0.9
+
+    vessel_top = Vessel(top_x, top_y, 1000)
+    vessel_right = Vessel(right_x, mid_y, 1000)
+    vessel_bottom = Vessel(bottom_x, bottom_y, 1000)
+
+    # Goals
+    vessel_top.goal = (bottom_x, bottom_y)
+    vessel_right.goal = (left_x, mid_y)
+    vessel_bottom.goal = (top_x, top_y)
+
+    # Headings:
+    # Left vessel faces east (toward right)
+    vessel_top.heading = math.pi
+    # Right vessel faces west (toward left)
+    vessel_right.heading = -math.pi / 2
+    # Bottom vessel faces north (toward top)
+    vessel_bottom.heading = 0.0
+
+    entity_manager.vessels.extend([vessel_top, vessel_right, vessel_bottom])

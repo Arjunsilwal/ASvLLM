@@ -4,6 +4,7 @@ from graphics_manager import GraphicsManager
 from event_manager import EventManager
 from entity import WHITE  # Using WHITE defined in entity.py
 
+
 class GameManager:
     def __init__(self, width, height):
         self.running = True
@@ -19,6 +20,7 @@ class GameManager:
             self.update(dt)
             self.render()
             clock.tick(60)
+        self.entity_manager.export_log("experiments/head_on_experiment_1.csv")
         pygame.quit()
 
     def update(self, dt):

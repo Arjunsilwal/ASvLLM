@@ -1,12 +1,14 @@
 import time
 import math
 import json
+import csv
 
 # --- Imports ---
 from entity import Vessel, ContextMenu
-from scenario_generator import head_on_scenario, cross_over_scenario, over_taking_scenario, multi_vessel_scenario
+from scenario_generator import head_on_scenario, cross_over_scenario, over_taking_scenario, multi_vessel_scenario, \
+    multi_vessel_scenario_2
 from useLLm import get_llm_decision
-from prompts_generator.advanced_prompt import generate_vessel_prompt
+from prompts_generator.low_prompt import generate_vessel_prompt
 from response_parser import Maneuver, parse_llm_response_for_all
 
 
@@ -21,12 +23,17 @@ class EntityManager:
         # LLM cooldown dict: keys = id(vessel), values = last query time
         self.llm_cooldown = {}
         self.llm_cooldown_duration = 5.0  # seconds
-        self.llm_trigger_distance_km = 0.35
+        self.llm_trigger_distance_km = 0.30
         self.pixels_per_km = 1000.0
 
         # simulation clock
         self._sim_time = 0.0
         self.llm_call_count = 0
+
+        self._log = []
+        self._last_logged_time = -1.0
+        self._last_prompt = None
+        self._last_response = None
 
     def draw(self, screen):
         for vessel in self.vessels:
@@ -61,6 +68,8 @@ class EntityManager:
             over_taking_scenario(self, sw, sh)
         elif selected_option == "Multi vessel Scenario":
             multi_vessel_scenario(self, sw, sh)
+        elif selected_option == "Multi vessel Scenario2":
+            multi_vessel_scenario_2(self, sw, sh)
 
     def update_vessels(self, dt):
         # gate movement: only proceed if movement key pressed or goals queued
@@ -75,6 +84,7 @@ class EntityManager:
         # assign all queued goals at once
         if self.goal_queue:
             for entry in self.goal_queue:
+                # unpack (vessel, goal)
                 if isinstance(entry, tuple) and len(entry) == 2:
                     vessel, goal = entry
                 else:
@@ -83,10 +93,12 @@ class EntityManager:
                     vessel = next((v for v in self.vessels if id(v) == vessel), None)
                 if not vessel:
                     continue
+
                 vessel.goal = goal
-                self.movement_active = True
+
             self.goal_queue.clear()
-            self.movement_active = True
+        if not self.movement_active:
+            return
 
         # 1) compute desired velocities
         for v in self.vessels:
@@ -125,9 +137,11 @@ class EntityManager:
                 self.llm_cooldown[id(v)] = self._sim_time
 
             prompt = generate_vessel_prompt(to_query, self.pixels_per_km)
+            self._last_prompt = prompt
             print("===== Prompt Sent to DeepSeek =====")
             print(prompt)
             raw = get_llm_decision(prompt)
+            self._last_response = raw
             print("Raw LLM response:", raw)
             self.llm_call_count += 1
 
@@ -154,6 +168,7 @@ class EntityManager:
                 # apply maneuver exactly as given by the LLM
                 v.apply_maneuver(cm, dt)
                 v.update_position(dt)
+
                 any_move = True
             else:
                 if v.goal:
@@ -164,3 +179,35 @@ class EntityManager:
 
         self.movement_active = any_move
 
+        if int(self._sim_time) != int(self._last_logged_time):
+            for v in self.vessels:
+                gx, gy = (v.goal if v.goal is not None else (None, None))
+                self._log.append({
+                    "time_s": self._sim_time,
+                    "vessel_id": id(v),
+                    "x": v.x,
+                    "y": v.y,
+                    "goal_x": gx,
+                    "goal_y": gy,
+                    "reached_goal": v.goal is None,
+                    "prompt": self._last_prompt,
+                    "response": self._last_response,
+                    # record the Maneuver enum value and its name
+                    "maneuver": v.current_maneuver if v.current_maneuver is not None else Maneuver.MAINTAIN_COURSE_SPEED,
+                    "maneuver_name": (v.current_maneuver.name
+                                      if v.current_maneuver is not None
+                                      else Maneuver.MAINTAIN_COURSE_SPEED.name)
+                })
+            self._last_logged_time = self._sim_time
+
+    def export_log(self, path):
+        import csv
+        fieldnames = [
+            "time_s", "vessel_id", "x", "y", "goal_x", "goal_y",
+            "reached_goal", "prompt", "response",
+            "maneuver", "maneuver_name"
+        ]
+        with open(path, "w", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(self._log)
