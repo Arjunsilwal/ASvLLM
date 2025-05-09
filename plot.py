@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-df = pd.read_csv("experiments/moderate/moderate_prompt_crossing_experiment_5.csv")
+df = pd.read_csv("experiments/detailed/detailed_prompt_crossing_experiment_8.csv")
 
 fig, ax = plt.subplots()
 

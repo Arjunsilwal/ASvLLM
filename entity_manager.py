@@ -62,14 +62,19 @@ class EntityManager:
                     break
         elif selected_option == "Head-On Scenario":
             head_on_scenario(self, sw, sh)
+            self.movement_active = True
         elif selected_option == "Cross Over Scenario":
             cross_over_scenario(self, sw, sh)
+            self.movement_active = True
         elif selected_option == "Over Taking Scenario":
             over_taking_scenario(self, sw, sh)
+            self.movement_active = True
         elif selected_option == "Multi vessel Scenario":
             multi_vessel_scenario(self, sw, sh)
+            self.movement_active = True
         elif selected_option == "Multi vessel Scenario2":
             multi_vessel_scenario_2(self, sw, sh)
+            self.movement_active = True
 
     def update_vessels(self, dt):
         # gate movement: only proceed if movement key pressed or goals queued

@@ -1,0 +1,1 @@
+python runner.py --scenario crossing --runs 10 --outdir experiments/detailed
