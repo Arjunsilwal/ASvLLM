@@ -20,7 +20,7 @@ class GameManager:
             self.update(dt)
             self.render()
             clock.tick(60)
-        self.entity_manager.export_log("experiments/head_on_experiment_1.csv")
+        self.entity_manager.export_log("experiments/detailed/detailed_prompt_head_on_experiment_4.csv")
         pygame.quit()
 
     def update(self, dt):

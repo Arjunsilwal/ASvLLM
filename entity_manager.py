@@ -8,7 +8,7 @@ from entity import Vessel, ContextMenu
 from scenario_generator import head_on_scenario, cross_over_scenario, over_taking_scenario, multi_vessel_scenario, \
     multi_vessel_scenario_2
 from useLLm import get_llm_decision
-from prompts_generator.low_prompt import generate_vessel_prompt
+from prompts_generator.detailed_prompt import generate_vessel_prompt
 from response_parser import Maneuver, parse_llm_response_for_all
 
 
@@ -132,7 +132,9 @@ class EntityManager:
                     to_query.append(v)
 
         # 3) query LLM for maneuvers
+        did_llm = False
         if to_query:
+            did_llm = True
             for v in to_query:
                 self.llm_cooldown[id(v)] = self._sim_time
 
@@ -179,7 +181,7 @@ class EntityManager:
 
         self.movement_active = any_move
 
-        if int(self._sim_time) != int(self._last_logged_time):
+        if did_llm or int(self._sim_time) != int(self._last_logged_time):
             for v in self.vessels:
                 gx, gy = (v.goal if v.goal is not None else (None, None))
                 self._log.append({
@@ -190,8 +192,8 @@ class EntityManager:
                     "goal_x": gx,
                     "goal_y": gy,
                     "reached_goal": v.goal is None,
-                    "prompt": self._last_prompt,
-                    "response": self._last_response,
+                    "prompt": self._last_prompt if did_llm else "",
+                    "response": self._last_response if did_llm else "",
                     # record the Maneuver enum value and its name
                     "maneuver": v.current_maneuver if v.current_maneuver is not None else Maneuver.MAINTAIN_COURSE_SPEED,
                     "maneuver_name": (v.current_maneuver.name
