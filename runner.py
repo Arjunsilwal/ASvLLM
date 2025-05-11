@@ -6,9 +6,9 @@ import pygame
 
 # <-- IMPORTANT: this makes pygame run “headless,” no window pops up.
 os.environ["SDL_VIDEODRIVER"] = "dummy"
-pygame.init()
 
 from game_manager import GameManager
+
 from scenario_generator import (
     head_on_scenario,
     cross_over_scenario,
@@ -25,6 +25,7 @@ SCENARIOS = {
 
 
 def run_experiment(scenario_name, width, height, run_idx, outdir, prefix="detailed_prompt"):
+    pygame.init()
     gm = GameManager(width, height)
     em = gm.entity_manager
     SCENARIOS[scenario_name](em, width, height)

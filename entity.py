@@ -137,7 +137,7 @@ class Vessel:
             self.y += self.desired_velocity[1]*dt
             self.rect.topleft = (self.x - self.size/2, self.y - self.size/2)
             # stop at goal
-            if self.goal and dist is not None and dist < 1:
+            if self.goal and dist is not None and dist < 5:
                 self.goal = None
                 self.speed = 0
 
@@ -167,10 +167,10 @@ class USSTucker(Vessel):
 class Francisco(Vessel):
     def __init__(self, x, y, pixels_per_km, size=30, color=BLUE):
         super().__init__(x, y, pixels_per_km, size=25, color=(0,128,255))
-        self.max_speed_kmph = 157
+        self.max_speed_kmph = 187
         self.acceleration = 3.028
         self.max_speed = kmph_to_pixels_per_sec(self.max_speed_kmph, pixels_per_km)
-        self.slow_down_distance = 100.0
+        self.slow_down_distance = 50.0
 
 
 class USSGerald(Vessel):

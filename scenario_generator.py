@@ -153,12 +153,13 @@ def multi_vessel_scenario_2(entity_manager, screen_width, screen_height):
     entity_manager.vessels.clear()
 
     left_x = screen_width * 0.1
-    mid_y = screen_height / 3
+    mid_y = screen_height /3
     right_x = screen_width * 0.9
     top_x = screen_width / 2
     top_y = screen_height * 0.2
     bottom_x = screen_width / 2
     bottom_y = screen_height * 0.9
+    right_goal = screen_height * 0.9
 
     vessel_top = Vessel(top_x, top_y, 1000)
     vessel_right = Vessel(right_x, mid_y, 1000)
@@ -166,7 +167,7 @@ def multi_vessel_scenario_2(entity_manager, screen_width, screen_height):
 
     # Goals
     vessel_top.goal = (bottom_x, bottom_y)
-    vessel_right.goal = (left_x, mid_y)
+    vessel_right.goal = (left_x, right_goal)
     vessel_bottom.goal = (top_x, top_y)
 
     # Headings:

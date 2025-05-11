@@ -26,7 +26,8 @@ def compute_tcpa_dcpa(own_ship, other_ship, pixels_per_km):
 
 
 def generate_vessel_prompt(vessels, pixels_per_km=1):
-    prompt = ("""
+    prompt = (
+        """
         "Ship navigation according to COLREGs.\n"
         "For each vessel listed below, determine the situation, role, action\n"
 
@@ -36,7 +37,7 @@ def generate_vessel_prompt(vessels, pixels_per_km=1):
       - action: "Alter course to starboard", "Alter course to port", "Reduce speed", or "Maintain course and speed"
 
         "Strict rules for labeling encounters:\n"
-        "1) Head-on: vessels on reciprocal or near-reciprocal courses (bearing diff ≈ 180°) → both \"Give-way\" & action \"Alter course to starboard\".\n"
+        "1) Head-on: If vessels not moving to same direction and vessels on reciprocal or near-reciprocal courses (bearing diff ≈ 180°) → both \"Give-way\" & action \"Alter course to starboard\".\n"
         "2) Crossing: if vessel B is on vessel A’s starboard side (relative bearing 0°<θ<112.5°) → A is \"Give-way\", B is \"Stand-on\".\n"
         "3) Overtaking: if one vessel is **faster** (speed diff >5 km/h) and **approaching from astern** (relative bearing >150° or <-150°) → faster is \"Give-way\" (action: Alter course to starboard or Alter course to port), slower is \"Stand-on\".\n"
 
