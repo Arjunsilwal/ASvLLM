@@ -5,9 +5,14 @@ from typing import Optional
 from openai import OpenAI
 
 # ─── CONFIG ────────────────────────────────────────────────────────────────────
-DEEPSEEK_BASE_URL = "https://api.deepseek.com/v1"
-DEEPSEEK_API_KEY_ENV = "DEEPSEEK_API_KEY"
-DEEPSEEK_MODEL = "deepseek-chat"
+#DEEPSEEK_BASE_URL = "https://api.deepseek.com/v1"
+#DEEPSEEK_API_KEY_ENV = "DEEPSEEK_API_KEY"
+#DEEPSEEK_MODEL = "deepseek-chat"
+
+GPT_BASE_URL = "https://api.openai.com/v1"
+GPT_API_KEY_ENV = "GPT_API_KEY"
+GPT_MODEL = "gpt-4o"
+
 
 YOUR_SITE_URL = "local_pygame_simulator"
 YOUR_APP_NAME = "VesselSim_COLREGs_Test"
@@ -36,23 +41,23 @@ def _clean_response(content: str) -> str:
 
 
 # ─── CLIENT SETUP ───────────────────────────────────────────────────────────────
-api_key = os.getenv(DEEPSEEK_API_KEY_ENV)
+api_key = os.getenv(GPT_API_KEY_ENV)
 if not api_key:
-    print(f"FATAL ERROR: Environment variable '{DEEPSEEK_API_KEY_ENV}' not set.")
+    print(f"FATAL ERROR: Environment variable '{GPT_API_KEY_ENV}' not set.")
     client = None
 else:
-    client = OpenAI(base_url=DEEPSEEK_BASE_URL, api_key=api_key)
-    print(f"[useLLm] DeepSeek API key loaded from {DEEPSEEK_API_KEY_ENV}.")
+    client = OpenAI(base_url=GPT_BASE_URL, api_key=api_key)
+    print(f"[useLLm] ChatGPT API key loaded from {GPT_API_KEY_ENV}.")
 
 
 # ─── ENTRYPOINT ────────────────────────────────────────────────────────────────
 def get_llm_decision(prompt: str) -> Optional[str]:
     """
-    Sends the prompt to DeepSeek and returns a pretty‐printed JSON string,
+    Sends the prompt to ChatGpt and returns a pretty‐printed JSON string,
     or None on error.
     """
     if client is None:
-        print("ERROR: DeepSeek client not initialized.")
+        print("ERROR: GPT client not initialized.")
         return None
     if not isinstance(prompt, str) or not prompt.strip():
         print("ERROR: Prompt must be a non‐empty string.")
@@ -65,7 +70,7 @@ def get_llm_decision(prompt: str) -> Optional[str]:
 
     try:
         resp = client.chat.completions.create(
-            model=DEEPSEEK_MODEL,
+            model=GPT_MODEL,
             messages=[{"role": "user", "content": prompt}],
             extra_headers={
                 "HTTP-Referer": YOUR_SITE_URL,
@@ -76,7 +81,7 @@ def get_llm_decision(prompt: str) -> Optional[str]:
             stream=False,
         )
     except Exception as e:
-        print(f"Error: DeepSeek request failed: {e}")
+        print(f"Error: Gpt request failed: {e}")
         return None
 
     # extract content

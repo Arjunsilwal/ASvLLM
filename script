@@ -1,1 +1,1 @@
-python runner.py --scenario multi --runs 10 --outdir experiments/detailed
+python runner.py --scenario multi2 --runs 10 --outdir experiments/detailed

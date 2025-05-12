@@ -1,7 +1,6 @@
 import time
 import math
 import json
-import csv
 
 # --- Imports ---
 from entity import Vessel, ContextMenu

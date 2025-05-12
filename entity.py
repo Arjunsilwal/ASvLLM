@@ -65,7 +65,7 @@ class Vessel:
         self.pixels_per_km = pixels_per_km
         self.max_speed_kmph = 67
         self.max_speed = kmph_to_pixels_per_sec(self.max_speed_kmph, pixels_per_km)
-        self.slow_down_distance = 50.0
+        self.slow_down_distance = 20.0
         self.goal = None
         self.selected = False
         self.heading = 0.0  # radians
@@ -137,7 +137,7 @@ class Vessel:
             self.y += self.desired_velocity[1]*dt
             self.rect.topleft = (self.x - self.size/2, self.y - self.size/2)
             # stop at goal
-            if self.goal and dist is not None and dist < 5:
+            if self.goal and dist is not None and dist < 15:
                 self.goal = None
                 self.speed = 0
 
