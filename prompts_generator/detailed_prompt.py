@@ -38,8 +38,8 @@ def generate_vessel_prompt(vessels, pixels_per_km=1):
 
         "Strict rules for labeling encounters:\n"
         "1) Head-on: If vessels not moving to same direction and vessels on reciprocal or near-reciprocal courses (bearing diff ≈ 180°) → both \"Give-way\" & action \"Alter course to starboard\".\n"
-        "2) Crossing: if vessel B is on vessel A’s starboard side (relative bearing 0°<θ<112.5°) → A is \"Give-way\", B is \"Stand-on\".\n"
-        "3) Overtaking: if one vessel is **faster** (speed diff >5 km/h) and **approaching from astern** (relative bearing >150° or <-150°) → faster is \"Give-way\" (action: Alter course to starboard or Alter course to port), slower is \"Stand-on\".\n"
+        "2) Crossing: If vessel B is on vessel A’s starboard side (relative bearing 0°<θ<112.5°) → A is \"Give-way\", B is \"Stand-on\".\n"
+        "3) Overtaking: if vessels are on the same course (heading difference <22.5°) and speed difference >5 km/h and the other vessel’s relBearing is >112.5° and <247.5°. Faster vessel: Give-way, Alter course to starboard; slower vessel: Stand-on.\n"
 
         "Respond ONLY with a JSON array of objects {id, situation, role, action}, **exactly one entry per vessel**. Do not produce more than one element for any given id, and do not include any extra text.\n\n"
         "Vessels Data:\n"
@@ -50,13 +50,20 @@ def generate_vessel_prompt(vessels, pixels_per_km=1):
         speed_kmh = (v.speed / pixels_per_km * 3600)
         prompt += f"- id: {id(v)}, pos: ({v.x:.1f},{v.y:.1f}), heading: {math.degrees(v.heading):.1f}°, speed: {speed_kmh:.1f} km/h\n"
         prompt += "  Other vessels:\n"
+        MOVING_THRESHOLD_KMPH = 0.1
         for o in vessels:
             if o is v: continue
+            other_speed = (o.speed / pixels_per_km * 3600)
+            if other_speed < MOVING_THRESHOLD_KMPH:
+                continue
             dist_km = math.hypot(o.x - v.x, o.y - v.y) / pixels_per_km
             rb = calculate_relative_bearing(v, o)
+
             tcpa, dcpa = compute_tcpa_dcpa(v, o, pixels_per_km)
             prompt += (
-                f"    - id: {id(o)}, dist: {dist_km:.3f} km, relBearing: {rb:.1f}°, "
+                f"    - id: {id(o)}, pos: ({o.x:.1f},{o.y:.1f}), heading: {math.degrees(o.heading):.1f}°, "
+                f"speed: {other_speed:.1f} km/h, "
+                f"dist: {dist_km:.3f} km, relBearing: {rb:.1f}°, "
                 f"TCPA: {tcpa:.1f}s, DCPA: {dcpa:.3f} km\n"
             )
     return prompt

@@ -83,7 +83,7 @@ def over_taking_scenario(entity_manager, screen_width, screen_height):
     vessel1_start_x = screen_width / 2
     vessel1_start_y = screen_height * 0.7  # near the bottom (80% down the screen)
     vessel1_goal_x = screen_width / 2
-    vessel1_goal_y = screen_height * 0.3  # near the top (20% down the screen)
+    vessel1_goal_y = screen_height * 0.2  # near the top (20% down the screen)
 
     # Vessel 2: from lower center to top center.
     vessel2_start_x = screen_width / 2

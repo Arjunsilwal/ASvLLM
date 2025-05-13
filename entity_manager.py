@@ -7,7 +7,7 @@ from entity import Vessel, ContextMenu
 from scenario_generator import head_on_scenario, cross_over_scenario, over_taking_scenario, multi_vessel_scenario, \
     multi_vessel_scenario_2
 from useLLm import get_llm_decision
-from prompts_generator.detailed_prompt import generate_vessel_prompt
+from prompts_generator.minimal_prompt import generate_vessel_prompt
 from response_parser import Maneuver, parse_llm_response_for_all
 
 
@@ -110,10 +110,22 @@ class EntityManager:
 
         # 2) detect conflicts (vessel-vessel only)
         to_query = []
+        MOVING_THRESHOLD_KMPH = 0.1  # or whatever small speed you consider “moving”
         for v in self.vessels:
             conflict = False
-            neigh = [o for o in self.vessels if o is not v
-                     and math.hypot(v.x - o.x, v.y - o.y) / self.pixels_per_km < self.llm_trigger_distance_km]
+            # compute current vessel speed in km/h
+            speed_kmh = (v.speed / self.pixels_per_km) * 3600
+            # if it’s essentially stopped, don’t even consider it for LLM
+            if speed_kmh <= MOVING_THRESHOLD_KMPH:
+                continue
+
+            # only consider other ships that are actually moving
+            neigh = [
+                o for o in self.vessels
+                if (o is not v
+                    and (o.speed / self.pixels_per_km * 3600) > MOVING_THRESHOLD_KMPH
+                    and math.hypot(v.x - o.x, v.y - o.y) / self.pixels_per_km < self.llm_trigger_distance_km)
+            ]
             if neigh:
                 vx, vy = v.desired_velocity
                 converging = any(
@@ -144,7 +156,7 @@ class EntityManager:
 
             prompt = generate_vessel_prompt(to_query, self.pixels_per_km)
             self._last_prompt = prompt
-            print("===== Prompt Sent to DeepSeek =====")
+            print("===== Prompt Sent to LLM =====")
             print(prompt)
             raw = get_llm_decision(prompt)
             self._last_response = raw
@@ -171,15 +183,29 @@ class EntityManager:
         for v in self.vessels:
             cm = getattr(v, 'current_maneuver', None)
             if cm not in (None, Maneuver.MAINTAIN_COURSE_SPEED):
-                # apply maneuver exactly as given by the LLM
+                # apply the LLM-directed maneuver
                 v.apply_maneuver(cm, dt)
                 v.update_position(dt)
 
+                # If we just reached the goal, clear any leftover maneuver **
+                if v.goal is None:
+                    v.current_maneuver = None
+                    v.in_maneuver = False
+                    v.speed = 0
+
                 any_move = True
             else:
+                # no active maneuver → head for the goal normally
                 if v.goal:
                     v.turn_towards_goal(dt)
                 v.update_position(dt)
+
+                # same check here
+                if v.goal is None:
+                    v.current_maneuver = None
+                    v.in_maneuver = False
+                    v.speed = 0
+
                 if v.goal:
                     any_move = True
 

@@ -22,7 +22,7 @@ SCENARIOS = {
 }
 
 
-def run_experiment(scenario_name, width, height, run_idx, outdir, prefix="detailed_prompt"):
+def run_experiment(scenario_name, width, height, run_idx, outdir, prefix="minimal_prompt"):
     # 1) Headless mode & init
     os.environ["SDL_VIDEODRIVER"] = "dummy"
     pygame.init()
@@ -57,17 +57,17 @@ def main():
     p.add_argument("--runs",     type=int,   default=1)
     p.add_argument("--outdir",   type=str,   default="experiments")
     p.add_argument("--width",    type=int,   default=800)
-    p.add_argument("--height",   type=int,   default=600)
+    p.add_argument("--height",   type=int,   default=800)
     args = p.parse_args()
 
-    for i in range(9, args.runs + 1):
+    for i in range(1, args.runs + 1):
         run_experiment(
             args.scenario,
             args.width,
             args.height,
             i,
             args.outdir,
-            prefix="detailed_prompt"
+            prefix="minimal_prompt"
         )
 
 

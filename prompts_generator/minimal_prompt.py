@@ -26,8 +26,11 @@ def generate_vessel_prompt(vessels, pixels_per_km=1):
         speed_kmh = (v.speed / pixels_per_km * 3600) if pixels_per_km > 0 else 0
         prompt += f"\n- id: {id(v)}, position: ({v.x:.1f}, {v.y:.1f}) px, heading: {math.degrees(v.heading):.1f}°, speed: {speed_kmh:.1f} km/h"
         prompt += "\n  Other vessels:"
+        MOVING_THRESHOLD_KMPH = 0.1
         for o in vessels:
-            if o is v:
+            if o is v: continue
+            other_speed = (o.speed / pixels_per_km * 3600)
+            if other_speed < MOVING_THRESHOLD_KMPH:
                 continue
             dx, dy = o.x - v.x, o.y - v.y
             dist_km = math.hypot(dx, dy) / pixels_per_km if pixels_per_km > 0 else 0

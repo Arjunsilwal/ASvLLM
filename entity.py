@@ -65,27 +65,28 @@ class Vessel:
         self.pixels_per_km = pixels_per_km
         self.max_speed_kmph = 67
         self.max_speed = kmph_to_pixels_per_sec(self.max_speed_kmph, pixels_per_km)
-        self.slow_down_distance = 20.0
+        self.slow_down_distance = 5.0
         self.goal = None
         self.selected = False
         self.heading = 0.0  # radians
-        self.rect = pygame.Rect(self.x - self.size/2, self.y - self.size/2, self.size, self.size)
+        self.rect = pygame.Rect(self.x - self.size / 2, self.y - self.size / 2, self.size, self.size)
         self.desired_velocity = [0.0, 0.0]
         self.turn_rate = math.radians(10)
+        self.current_maneuver = None
         self.in_maneuver = False
 
     @staticmethod
     def rotate_point(point, angle, origin):
         ox, oy = origin
         px, py = point
-        qx = ox + math.cos(angle)*(px-ox) - math.sin(angle)*(py-oy)
-        qy = oy + math.sin(angle)*(px-ox) + math.cos(angle)*(py-oy)
+        qx = ox + math.cos(angle) * (px - ox) - math.sin(angle) * (py - oy)
+        qy = oy + math.sin(angle) * (px - ox) + math.cos(angle) * (py - oy)
         return (qx, qy)
 
     def draw(self, screen):
-        tip = (self.x, self.y - self.size/2)
-        left = (self.x - self.size/3, self.y + self.size/2)
-        right = (self.x + self.size/3, self.y + self.size/2)
+        tip = (self.x, self.y - self.size / 2)
+        left = (self.x - self.size / 3, self.y + self.size / 2)
+        right = (self.x + self.size / 3, self.y + self.size / 2)
         pts = [tip, left, right]
         rot = self.heading
         pts = [Vessel.rotate_point(p, rot, (self.x, self.y)) for p in pts]
@@ -106,14 +107,14 @@ class Vessel:
             return
         dx = self.goal[0] - self.x
         dy = self.goal[1] - self.y
-        desired = (math.atan2(dy, dx) + math.pi/2) % (2*math.pi)
-        diff = (desired - self.heading + math.pi) % (2*math.pi) - math.pi
+        desired = (math.atan2(dy, dx) + math.pi / 2) % (2 * math.pi)
+        diff = (desired - self.heading + math.pi) % (2 * math.pi) - math.pi
         max_turn = self.turn_rate * dt
         if abs(diff) > max_turn:
             self.heading += max_turn if diff > 0 else -max_turn
         else:
             self.heading = desired
-        self.heading %= (2*math.pi)
+        self.heading %= (2 * math.pi)
 
     def calculate_desired_velocity(self):
         vx = self.speed * math.sin(self.heading)
@@ -125,52 +126,53 @@ class Vessel:
         if self.goal or self.in_maneuver:
             dist = None
             if self.goal:
-                dx, dy = self.goal[0]-self.x, self.goal[1]-self.y
+                dx, dy = self.goal[0] - self.x, self.goal[1] - self.y
                 dist = math.hypot(dx, dy)
             if dist is None or dist > self.slow_down_distance:
-                self.speed = min(self.speed + self.acceleration*dt, self.max_speed)
+                self.speed = min(self.speed + self.acceleration * dt, self.max_speed)
             else:
-                self.speed = max(self.speed - self.acceleration*dt, 0)
+                self.speed = max(self.speed - self.acceleration * dt, 0)
             # move
             self.calculate_desired_velocity()
-            self.x += self.desired_velocity[0]*dt
-            self.y += self.desired_velocity[1]*dt
-            self.rect.topleft = (self.x - self.size/2, self.y - self.size/2)
+            self.x += self.desired_velocity[0] * dt
+            self.y += self.desired_velocity[1] * dt
+            self.rect.topleft = (self.x - self.size / 2, self.y - self.size / 2)
             # stop at goal
             if self.goal and dist is not None and dist < 15:
                 self.goal = None
                 self.speed = 0
+                self.in_maneuver = False
 
     def apply_maneuver(self, maneuver, dt=1.0):
         # only adjust heading/speed
         self.in_maneuver = (maneuver != Maneuver.MAINTAIN_COURSE_SPEED)
         if maneuver == Maneuver.ALTER_COURSE_STARBOARD:
-            self.heading += self.turn_rate*dt
+            self.heading += self.turn_rate * dt
         elif maneuver == Maneuver.ALTER_COURSE_PORT:
-            self.heading -= self.turn_rate*dt
+            self.heading -= self.turn_rate * dt
         elif maneuver == Maneuver.REDUCE_SPEED:
-            self.speed = max(self.speed - self.acceleration*dt, 0)
+            self.speed = max(self.speed - self.acceleration * dt, 0)
         elif maneuver == Maneuver.PASS_ASTERN:
-            self.heading += self.turn_rate*2*dt
-            self.speed = max(self.speed - self.acceleration*dt, 0)
+            self.heading += self.turn_rate * 2 * dt
+            self.speed = max(self.speed - self.acceleration * dt, 0)
         # normalize
-        self.heading %= (2*math.pi)
+        self.heading %= (2 * math.pi)
 
 
 class USSTucker(Vessel):
     def __init__(self, x, y, pixels_per_km):
-        super().__init__(x, y, pixels_per_km, size=30, color=(0,128,255))
+        super().__init__(x, y, pixels_per_km, size=30, color=(0, 128, 255))
         self.max_speed_kmph = 37
         self.max_speed = kmph_to_pixels_per_sec(self.max_speed_kmph, pixels_per_km)
 
 
 class Francisco(Vessel):
     def __init__(self, x, y, pixels_per_km, size=30, color=BLUE):
-        super().__init__(x, y, pixels_per_km, size=25, color=(0,128,255))
+        super().__init__(x, y, pixels_per_km, size=25, color=(0, 128, 255))
         self.max_speed_kmph = 187
         self.acceleration = 3.028
         self.max_speed = kmph_to_pixels_per_sec(self.max_speed_kmph, pixels_per_km)
-        self.slow_down_distance = 50.0
+        self.slow_down_distance = 15.0
 
 
 class USSGerald(Vessel):

@@ -5,21 +5,32 @@ from typing import Optional
 from openai import OpenAI
 
 # ─── CONFIG ────────────────────────────────────────────────────────────────────
-#DEEPSEEK_BASE_URL = "https://api.deepseek.com/v1"
-#DEEPSEEK_API_KEY_ENV = "DEEPSEEK_API_KEY"
-#DEEPSEEK_MODEL = "deepseek-chat"
+# DEEPSEEK_BASE_URL = "https://api.deepseek.com/v1"
+# DEEPSEEK_API_KEY_ENV = "DEEPSEEK_API_KEY"
+# DEEPSEEK_MODEL = "deepseek-chat"
 
-GPT_BASE_URL = "https://api.openai.com/v1"
-GPT_API_KEY_ENV = "GPT_API_KEY"
-GPT_MODEL = "gpt-4o"
+# GPT_BASE_URL = "https://api.openai.com/v1"
+# GPT_API_KEY_ENV = "GPT_API_KEY"
+# GPT_MODEL = "gpt-4o"
 
+Claude_BASE_URL = "https://api.anthropic.com/v1"
+CLAUDE_API_KEY_ENV = "CLAUDE_API_KEY"
+CLAUDE_MODEL = "claude-3-opus-20240229"
 
 YOUR_SITE_URL = "local_pygame_simulator"
 YOUR_APP_NAME = "VesselSim_COLREGs_Test"
 
 # DeepSeek pricing (per token)
-INPUT_TOKEN_PRICE = 0.55 / 1_000_000
-OUTPUT_TOKEN_PRICE = 2.19 / 1_000_000
+# INPUT_TOKEN_PRICE = 0.55 / 1_000_000
+# OUTPUT_TOKEN_PRICE = 2.19 / 1_000_000
+
+# gpt pricing (per token)
+# INPUT_TOKEN_PRICE = 0.005 / 1_000
+# OUTPUT_TOKEN_PRICE = 0.015 / 1_000
+
+# Claude pricing (per token)
+INPUT_TOKEN_PRICE = 0.015 / 1_000
+OUTPUT_TOKEN_PRICE = 0.075 / 1_000
 
 
 # ─── UTILS ─────────────────────────────────────────────────────────────────────
@@ -41,13 +52,13 @@ def _clean_response(content: str) -> str:
 
 
 # ─── CLIENT SETUP ───────────────────────────────────────────────────────────────
-api_key = os.getenv(GPT_API_KEY_ENV)
+api_key = os.getenv(CLAUDE_API_KEY_ENV)
 if not api_key:
-    print(f"FATAL ERROR: Environment variable '{GPT_API_KEY_ENV}' not set.")
+    print(f"FATAL ERROR: Environment variable '{CLAUDE_API_KEY_ENV}' not set.")
     client = None
 else:
-    client = OpenAI(base_url=GPT_BASE_URL, api_key=api_key)
-    print(f"[useLLm] ChatGPT API key loaded from {GPT_API_KEY_ENV}.")
+    client = OpenAI(base_url=Claude_BASE_URL, api_key=api_key)
+    print(f"[useLLm] Claude API key loaded from {CLAUDE_API_KEY_ENV}.")
 
 
 # ─── ENTRYPOINT ────────────────────────────────────────────────────────────────
@@ -57,20 +68,20 @@ def get_llm_decision(prompt: str) -> Optional[str]:
     or None on error.
     """
     if client is None:
-        print("ERROR: GPT client not initialized.")
+        print("ERROR: Claude client not initialized.")
         return None
     if not isinstance(prompt, str) or not prompt.strip():
         print("ERROR: Prompt must be a non‐empty string.")
         return None
 
     # show the prompt
-    print("\n===== Prompt Sent to DeepSeek =====")
+    print("\n===== Prompt Sent to Claude =====")
     print(prompt)
     print("===================================\n")
 
     try:
         resp = client.chat.completions.create(
-            model=GPT_MODEL,
+            model=CLAUDE_MODEL,
             messages=[{"role": "user", "content": prompt}],
             extra_headers={
                 "HTTP-Referer": YOUR_SITE_URL,
@@ -81,14 +92,14 @@ def get_llm_decision(prompt: str) -> Optional[str]:
             stream=False,
         )
     except Exception as e:
-        print(f"Error: Gpt request failed: {e}")
+        print(f"Error: Claude request failed: {e}")
         return None
 
     # extract content
     try:
         content = resp.choices[0].message.content
     except Exception as e:
-        print(f"Error: Unexpected DeepSeek response structure: {e}")
+        print(f"Error: Unexpected Claude response structure: {e}")
         return None
 
     if not content:
