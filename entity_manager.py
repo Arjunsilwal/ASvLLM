@@ -7,7 +7,7 @@ from entity import Vessel, ContextMenu
 from scenario_generator import head_on_scenario, cross_over_scenario, over_taking_scenario, multi_vessel_scenario, \
     multi_vessel_scenario_2
 from useLLm import get_llm_decision
-from prompts_generator.minimal_prompt import generate_vessel_prompt
+from prompts_generator.detailed_prompt import generate_vessel_prompt
 from response_parser import Maneuver, parse_llm_response_for_all
 
 
@@ -149,7 +149,7 @@ class EntityManager:
 
         # 3) query LLM for maneuvers
         did_llm = False
-        if to_query:
+        if len(to_query) > 1:
             did_llm = True
             for v in to_query:
                 self.llm_cooldown[id(v)] = self._sim_time

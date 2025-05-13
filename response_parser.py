@@ -34,7 +34,7 @@ def parse_llm_response_for_all(response_json_string: str):
             print(f"Warning: invalid id '{raw_id}', skipping entry")
             continue
 
-        action_str = entry.get("action", "").lower()
+        action_str = (entry.get("action") or "").lower()
         # robust normalization for mapping
         if ("alter course to starboard" in action_str
                 or "altercoursestarboard" in action_str

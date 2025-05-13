@@ -4,20 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d07b43d-c4b8-49b1-b420-2a3cca58eb59" name="Changes" comment="GPT API integration">
+    <list default="true" id="0d07b43d-c4b8-49b1-b420-2a3cca58eb59" name="Changes" comment="Claude API integration">
+      <change afterPath="$PROJECT_DIR$/avg_performance.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/plot2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entity.py" beforeDir="false" afterPath="$PROJECT_DIR$/entity.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/entity_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/entity_manager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plot.py" beforeDir="false" afterPath="$PROJECT_DIR$/plot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prompts_generator/detailed_prompt.py" beforeDir="false" afterPath="$PROJECT_DIR$/prompts_generator/detailed_prompt.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prompts_generator/minimal_prompt.py" beforeDir="false" afterPath="$PROJECT_DIR$/prompts_generator/minimal_prompt.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prompts_generator/moderate_prompt.py" beforeDir="false" afterPath="$PROJECT_DIR$/prompts_generator/moderate_prompt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/response_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/response_parser.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenario_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/scenario_generator.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/script" beforeDir="false" afterPath="$PROJECT_DIR$/script" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/useLLm.py" beforeDir="false" afterPath="$PROJECT_DIR$/useLLm.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,18 +51,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.game_manager.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.plot.executor&quot;: &quot;Run&quot;,
-    &quot;Python.scenario_generator.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.avg_performance.executor": "Run",
+    "Python.game_manager.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.plot.executor": "Run",
+    "Python.plot2.executor": "Run",
+    "Python.scenario_generator.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/experiments/claude_experiments/minimal" />
       <recent name="$PROJECT_DIR$/experiments/deepseek_experiments" />
       <recent name="$PROJECT_DIR$/experiments/minimal" />
     </key>
@@ -151,7 +150,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747061796320</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Claude API integration">
+      <option name="closed" value="true" />
+      <created>1747151341881</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1747151341881</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -172,6 +179,7 @@
     <MESSAGE value="script and runner file added" />
     <MESSAGE value="bug fixes" />
     <MESSAGE value="GPT API integration" />
-    <option name="LAST_COMMIT_MESSAGE" value="GPT API integration" />
+    <MESSAGE value="Claude API integration" />
+    <option name="LAST_COMMIT_MESSAGE" value="Claude API integration" />
   </component>
 </project>
