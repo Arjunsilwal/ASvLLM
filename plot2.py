@@ -7,7 +7,7 @@ from matplotlib.patches import FancyArrowPatch
 import matplotlib.cm as cm
 
 # --- Data Loading and Preparation
-df = pd.read_csv("experiments/gpt_experiments/detailed/detailed_prompt_crossing_experiment_1.csv")
+df = pd.read_csv("experiments/gpt_experiments/moderate/moderate_prompt_multi2_experiment_4.csv")
 df = df.sort_values("time_s")
 
 times = np.unique(df["time_s"].values)
@@ -37,8 +37,9 @@ for i, vid in enumerate(vessel_ids):
             goals[i, 0] = gxs[0]
             goals[i, 1] = gys[0]
 
-fig, ax = plt.subplots(figsize=(8, 6))
-plt.subplots_adjust(bottom=0.25, right=0.85)  # Adjust right for legend if needed
+
+fig, ax = plt.subplots(figsize=(3*1.9685, 3*1.9685), dpi=100)
+plt.subplots_adjust(bottom=0.25)
 
 # Define colors for vessels
 # Using a colormap for distinct colors
@@ -46,7 +47,7 @@ colors = [cm.viridis(i / len(vessel_ids)) for i in range(len(vessel_ids))]
 
 # plot full tracks in light dashed
 for i, vid in enumerate(vessel_ids):
-    ax.plot(coords[i, :, 0], coords[i, :, 1], "--", color=colors[i], alpha=0.3, label=f"V{i + 1}")
+    ax.plot(coords[i, :, 0], coords[i, :, 1], "--", color=colors[i], alpha=0.7, label=f"V{i + 1}", linewidth=2.0)
 
 # plot goals
 if has_goals:
@@ -56,15 +57,19 @@ if has_goals:
 
 ax.invert_yaxis()
 ax.set_aspect("auto")
-ax.set_xlabel("X")
-ax.set_ylabel("Y")
-ax.set_title("Vessel Trajectories")
-ax.legend(loc='upper right')
+ax.set_xlabel("X", fontweight='bold')
+ax.set_ylabel("Y", fontweight='bold')
+ax.set_title("Vessel Trajectories", fontweight='bold')
+legend_obj = ax.legend(loc='upper right')
+
+# Make the legend labels bold
+for text in legend_obj.get_texts():
+    text.set_fontweight('bold')
 
 vessel_patches = []
 
 # Define triangle dimensions here
-triangle_head_width = 8
+triangle_head_width = 7
 triangle_head_length = 20
 
 # The vector length used to define direction (can be small when lw=0)
@@ -76,10 +81,10 @@ for i, vid in enumerate(vessel_ids):
     patch = FancyArrowPatch((0, 0), (arrow_vector_length, 0),
                             arrowstyle=f"-|>,head_width={triangle_head_width},head_length={triangle_head_length}",
                             color=colors[i],
-                            mutation_scale=1,  # Controls the size scaling (1 is default)
+                            mutation_scale=1,  # Controls the size scaling (1 is default) - you could also scale here
                             lw=0,  # Line width of the arrow body (0 makes it just a triangle)
                             zorder=3)  # Ensure it's drawn on top
-    ax.add_patch(patch)
+    ax.add_patch(patch)  # Add the patch to the axes
     vessel_patches.append(patch)
 
 

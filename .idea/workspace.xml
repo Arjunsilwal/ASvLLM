@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d07b43d-c4b8-49b1-b420-2a3cca58eb59" name="Changes" comment="Bug fixes">
+    <list default="true" id="0d07b43d-c4b8-49b1-b420-2a3cca58eb59" name="Changes" comment="Triangle shape added to plot">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plot2.py" beforeDir="false" afterPath="$PROJECT_DIR$/plot2.py" afterDir="false" />
     </list>
@@ -160,7 +160,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747172785666</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Triangle shape added to plot">
+      <option name="closed" value="true" />
+      <created>1747329824100</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1747329824100</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -182,6 +190,7 @@
     <MESSAGE value="GPT API integration" />
     <MESSAGE value="Claude API integration" />
     <MESSAGE value="Bug fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bug fixes" />
+    <MESSAGE value="Triangle shape added to plot" />
+    <option name="LAST_COMMIT_MESSAGE" value="Triangle shape added to plot" />
   </component>
 </project>
