@@ -6,7 +6,7 @@ import json
 from entity import Vessel, ContextMenu
 from scenario_generator import head_on_scenario, cross_over_scenario, over_taking_scenario, multi_vessel_scenario, \
     multi_vessel_scenario_2
-from useLLm import get_llm_decision
+from ragLLM import get_llm_decision
 from prompts_generator.detailed_prompt import generate_vessel_prompt
 from response_parser import Maneuver, parse_llm_response_for_all
 
