@@ -6,8 +6,8 @@ import json
 from entity import Vessel, ContextMenu
 from scenario_generator import head_on_scenario, cross_over_scenario, over_taking_scenario, multi_vessel_scenario, \
     multi_vessel_scenario_2
-from ragLLM import get_llm_decision
-from prompts_generator.detailed_prompt import generate_vessel_prompt
+from useLLm import get_llm_decision
+from prompts_generator.minimal_prompt import generate_vessel_prompt
 from response_parser import Maneuver, parse_llm_response_for_all
 
 
@@ -21,8 +21,8 @@ class EntityManager:
 
         # LLM cooldown dict: keys = id(vessel), values = last query time
         self.llm_cooldown = {}
-        self.llm_cooldown_duration = 5.0  # seconds
-        self.llm_trigger_distance_km = 0.30
+        self.llm_cooldown_duration = 2.0  # seconds
+        self.llm_trigger_distance_km = 0.60
         self.pixels_per_km = 1000.0
 
         # simulation clock
@@ -110,7 +110,7 @@ class EntityManager:
 
         # 2) detect conflicts (vessel-vessel only)
         to_query = []
-        MOVING_THRESHOLD_KMPH = 0.1  # or whatever small speed you consider “moving”
+        MOVING_THRESHOLD_KMPH = 0.1
         for v in self.vessels:
             conflict = False
             # compute current vessel speed in km/h

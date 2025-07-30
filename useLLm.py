@@ -5,17 +5,17 @@ from typing import Optional
 from openai import OpenAI
 
 # ─── CONFIG ────────────────────────────────────────────────────────────────────
-# DEEPSEEK_BASE_URL = "https://api.deepseek.com/v1"
-# DEEPSEEK_API_KEY_ENV = "DEEPSEEK_API_KEY"
-# DEEPSEEK_MODEL = "deepseek-chat"
+DEEPSEEK_BASE_URL = "https://api.deepseek.com/v1"
+DEEPSEEK_API_KEY_ENV = "DEEPSEEK_API_KEY"
+DEEPSEEK_MODEL = "deepseek-chat"
 
 # GPT_BASE_URL = "https://api.openai.com/v1"
 # GPT_API_KEY_ENV = "GPT_API_KEY"
 # GPT_MODEL = "gpt-4o"
 
-Claude_BASE_URL = "https://api.anthropic.com/v1"
-CLAUDE_API_KEY_ENV = "CLAUDE_API_KEY"
-CLAUDE_MODEL = "claude-3-opus-20240229"
+# Claude_BASE_URL = "https://api.anthropic.com/v1"
+# CLAUDE_API_KEY_ENV = "CLAUDE_API_KEY"
+# CLAUDE_MODEL = "claude-3-opus-20240229"
 
 YOUR_SITE_URL = "local_pygame_simulator"
 YOUR_APP_NAME = "VesselSim_COLREGs_Test"
@@ -52,13 +52,13 @@ def _clean_response(content: str) -> str:
 
 
 # ─── CLIENT SETUP ───────────────────────────────────────────────────────────────
-api_key = os.getenv(CLAUDE_API_KEY_ENV)
+api_key = os.getenv(DEEPSEEK_API_KEY_ENV)
 if not api_key:
-    print(f"FATAL ERROR: Environment variable '{CLAUDE_API_KEY_ENV}' not set.")
+    print(f"FATAL ERROR: Environment variable '{DEEPSEEK_API_KEY_ENV}' not set.")
     client = None
 else:
-    client = OpenAI(base_url=Claude_BASE_URL, api_key=api_key)
-    print(f"[useLLm] Claude API key loaded from {CLAUDE_API_KEY_ENV}.")
+    client = OpenAI(base_url=DEEPSEEK_BASE_URL, api_key=api_key)
+    print(f"[useLLm] Claude API key loaded from {DEEPSEEK_API_KEY_ENV}.")
 
 
 # ─── ENTRYPOINT ────────────────────────────────────────────────────────────────
@@ -81,7 +81,7 @@ def get_llm_decision(prompt: str) -> Optional[str]:
 
     try:
         resp = client.chat.completions.create(
-            model=CLAUDE_MODEL,
+            model=DEEPSEEK_MODEL,
             messages=[{"role": "user", "content": prompt}],
             extra_headers={
                 "HTTP-Referer": YOUR_SITE_URL,

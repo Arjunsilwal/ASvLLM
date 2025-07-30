@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0d07b43d-c4b8-49b1-b420-2a3cca58eb59" name="Changes" comment="Triangle shape added to plot">
-      <change afterPath="$PROJECT_DIR$/COLREG-Consolidated-2018.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ragLLM.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/langchain_rag.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rag_with_llm_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/entity_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/entity_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ragLLM.py" beforeDir="false" afterPath="$PROJECT_DIR$/ragLLM.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/useLLm.py" beforeDir="false" afterPath="$PROJECT_DIR$/useLLm.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,21 +47,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.avg_performance.executor": "Run",
-    "Python.game_manager.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.plot.executor": "Run",
-    "Python.plot2.executor": "Run",
-    "Python.scenario_generator.executor": "Run",
-    "Python.try.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/arjun/Desktop/ASvLLM"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.avg_performance.executor&quot;: &quot;Run&quot;,
+    &quot;Python.game_manager.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.plot.executor&quot;: &quot;Run&quot;,
+    &quot;Python.plot2.executor&quot;: &quot;Run&quot;,
+    &quot;Python.scenario_generator.executor&quot;: &quot;Run&quot;,
+    &quot;Python.try.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/arjun/Desktop/ASvLLM&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -72,7 +75,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-dfff61a61320-9cdd278e9d02-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-251.25410.159" />
+        <option value="bundled-python-sdk-598b0484d0b5-e2d783800521-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-251.26927.74" />
       </set>
     </attachedChunks>
   </component>

@@ -105,6 +105,11 @@ def get_llm_decision(prompt: str) -> str | None:
         "Ensure the `id` is a simple string (e.g., 'rule_1', 'situation_A')."
     )
 
+    #  PRINT THE AUGMENTED TEXT
+    print("\n--- Augmented Prompt (sent to LLM) ---\n")
+    print(rag_prompt)
+    print("\n---------------------------------------\n")
+
     payload = {
         "model": OLLAMA_MODEL,
         "messages": [{"role": "user", "content": rag_prompt}],
