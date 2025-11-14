@@ -58,7 +58,7 @@ class EventManager:
                             return
                     entity_manager.show_context_menu(event.pos,
                                                      ["Create Vessel", "Head-On Scenario",
-                                                      "Cross Over Scenario", "Over Taking Scenario","Multi vessel Scenario","Multi vessel Scenario2"
+                                                      "Cross Over Scenario", "Over Taking Scenario","Multi vessel Scenario","Multi vessel Scenario2","Traffic Separation Scenario"
                                                       ])
 
         elif event.type == pygame.KEYDOWN:

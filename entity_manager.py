@@ -1,15 +1,15 @@
 import time
 import math
 import json
-
 # --- Imports ---
 from entity import Vessel, ContextMenu
 from scenario_generator import head_on_scenario, cross_over_scenario, over_taking_scenario, multi_vessel_scenario, \
     multi_vessel_scenario_2
-from useLLm import get_llm_decision
+#from useLLm import get_llm_decision
 from prompts_generator.minimal_prompt import generate_vessel_prompt
 from response_parser import Maneuver, parse_llm_response_for_all
 
+from modular_rag import ModularRAGManager
 
 class EntityManager:
     def __init__(self, game_manager):
@@ -22,7 +22,7 @@ class EntityManager:
         # LLM cooldown dict: keys = id(vessel), values = last query time
         self.llm_cooldown = {}
         self.llm_cooldown_duration = 2.0  # seconds
-        self.llm_trigger_distance_km = 0.60
+        self.llm_trigger_distance_km = 0.45
         self.pixels_per_km = 1000.0
 
         # simulation clock
@@ -33,6 +33,8 @@ class EntityManager:
         self._last_logged_time = -1.0
         self._last_prompt = None
         self._last_response = None
+
+        self.rag_system = ModularRAGManager()
 
     def draw(self, screen):
         for vessel in self.vessels:
@@ -157,8 +159,9 @@ class EntityManager:
             prompt = generate_vessel_prompt(to_query, self.pixels_per_km)
             self._last_prompt = prompt
             print("===== Prompt Sent to LLM =====")
-            print(prompt)
-            raw = get_llm_decision(prompt)
+            # print(prompt)
+            raw = self.rag_system.get_llm_decision(prompt)
+            #raw = get_llm_decision(prompt)
             self._last_response = raw
             print("Raw LLM response:", raw)
             self.llm_call_count += 1
