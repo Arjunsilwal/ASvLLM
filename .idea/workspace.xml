@@ -4,31 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d07b43d-c4b8-49b1-b420-2a3cca58eb59" name="Changes" comment="Triangle shape added to plot">
-      <change afterPath="$PROJECT_DIR$/entity_manager2.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/entity_manager_hybrid.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/entity_manager_natural_language.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pdf_files/COLREGs Quick Guide.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pdf_files/MIR2526.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pdf_files/Rules of the Road.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pdf_files/colregs_paper.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prompts_generator/natural_language_prompt.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prompts_generator/prompt_generator.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prompts_generator/tss_prompt.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vision_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/COLREG-Consolidated-2018.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/colreg_chunks.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/colreg_faiss_index.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/entity.py" beforeDir="false" afterPath="$PROJECT_DIR$/entity.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entity_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/entity_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/event_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/event_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modular_rag.py" beforeDir="false" afterPath="$PROJECT_DIR$/modular_rag.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/response_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/response_parser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenario_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/scenario_generator.py" afterDir="false" />
-    </list>
+    <list default="true" id="0d07b43d-c4b8-49b1-b420-2a3cca58eb59" name="Changes" comment="update to save details" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -197,7 +173,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747329824100</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="update to save details">
+      <option name="closed" value="true" />
+      <created>1763149076760</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1763149076760</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -220,6 +204,7 @@
     <MESSAGE value="Claude API integration" />
     <MESSAGE value="Bug fixes" />
     <MESSAGE value="Triangle shape added to plot" />
-    <option name="LAST_COMMIT_MESSAGE" value="Triangle shape added to plot" />
+    <MESSAGE value="update to save details" />
+    <option name="LAST_COMMIT_MESSAGE" value="update to save details" />
   </component>
 </project>
