@@ -1,79 +1,162 @@
 import pygame
 import os
 import asyncio
+import importlib
 from graphics_manager import GraphicsManager
 from event_manager import EventManager
 from entity import WHITE
+from ui_manager import UIManager
+
 
 class GameManager:
-    def __init__(self, width, height, mode='rag'): # <-- Add 'mode' argument
+    def __init__(self, width, height):
         self.running = True
-        self.graphics_manager = GraphicsManager(width, height, "ASV")
+        self.paused = False
+        self.graphics_manager = GraphicsManager(width, height, "ASV Simulation")
         self.event_manager = EventManager(self)
-        self.mode = mode
 
-        # --- DYNAMICALLY IMPORT AND CREATE THE CORRECT ENTITY MANAGER ---
-        if self.mode == 'natural':
-            from entity_manager_natural_language import EntityManager
-            self.entity_manager = EntityManager(self)
-            print("Vision with natural language EntityManager loaded.")
-        elif self.mode == "hybrid":
-            from entity_manager_hybrid import EntityManager
-            self.entity_manager = EntityManager(self)
-            print("Hybrid EntityManager loaded.")
-        else: # Default to the original RAG manager
-            from entity_manager2 import EntityManager # Assuming this is your final RAG manager
-            self.entity_manager = EntityManager(self)
-            print("RAG EntityManager loaded.")
-        # --- END OF DYNAMIC IMPORT ---
+        self.ui_manager = UIManager(width)
+        self.entity_manager = None
+        self.current_mode = None
+        self.current_llm = None
+        self.current_prompt_type = None
 
-    # --- The ORIGINAL, SYNCHRONOUS game loop ---
-    def run_sync(self):
-        clock = pygame.time.Clock()
-        while self.running:
-            self.event_manager.handle_events()
-            dt = clock.tick(60) / 1000.0
-            self.update_sync(dt) # Call the sync update
-            self.render()
-        self.entity_manager.export_log("...path_to_your_rag_log.csv")
-        pygame.quit()
+    def load_simulation_scripted(self, mode, llm, prompt, scenario):
+        """
+        Allows a python script to load a simulation directly
+        without using the UI dropdowns.
+        """
+        self.current_mode = mode
+        self.current_llm = llm
+        self.current_prompt_type = prompt
 
-    def update_sync(self, dt):
-        self.entity_manager.update_vessels(dt) # This is a normal function call
+        mode_to_file = {
+            "natural": "entity_manager_natural_language",
+            "prompt_history": "entity_manager_prompt_history",
+            "standard": "entity_manager_standard",
+            "tss": "entity_manager_tss"
+        }
 
-    # --- The NEW, ASYNCHRONOUS game loop for the vision experiment ---
+        target_module_name = mode_to_file.get(mode, "entity_manager_standard")
+        import importlib
+        module = importlib.import_module(target_module_name)
+        importlib.reload(module)
+
+        self.entity_manager = getattr(module, "EntityManager")(self, llm_provider=llm)
+        self.entity_manager.load_scenario(scenario)
+        self.paused = False
+        print(f">>> BATCH RUN: Mode={mode}, Scenario={scenario}")
+
+    def load_simulation(self):
+        """
+        Dynamically loads the correct EntityManager based on UI selections.
+        This allows switching between 'Natural', 'P+H', and 'Hybrid' at runtime.
+        """
+        # 1. Get configuration from UI
+        self.current_mode = self.ui_manager.get_value("mode")
+        self.current_llm = self.ui_manager.get_value("llm")
+        self.current_prompt_type = self.ui_manager.get_value("prompt")
+        selected_scenario = self.ui_manager.get_value("scenario")
+
+        print(f"\n--- Loading Simulation ---")
+        print(f"  Mode: {self.current_mode}")
+        print(f"  LLM: {self.current_llm}")
+        print(f"  Scenario: {selected_scenario}")
+
+        # 2. Map UI mode values to specific file names
+        mode_to_file = {
+            "natural": "entity_manager_natural_language",
+            "prompt_history": "entity_manager_prompt_history",
+            "hybrid": "entity_manager_hybrid",
+            "tss": "entity_manager_tss",
+            "rag": "entity_manager2",
+            "standard": "entity_manager_standard"
+        }
+
+        target_module_name = mode_to_file.get(self.current_mode, "entity_manager_standard")
+
+        try:
+            # 3. Dynamic Import
+            # This replaces the need for a single massive entity_manager_standard.py
+            module = importlib.import_module(target_module_name)
+            # Ensure the module is reloaded in case you made code changes
+            importlib.reload(module)
+
+            EntityManagerClass = getattr(module, "EntityManager")
+
+            # 4. Initialize the manager with the selected LLM
+            self.entity_manager = EntityManagerClass(
+                self,
+                llm_provider=self.current_llm
+            )
+
+            # 5. Load the Scenario (Head-on, Crossing, etc.)
+            # Most of our managers use 'load_scenario', some use 'handle_context_selection'
+            if hasattr(self.entity_manager, 'load_scenario'):
+                self.entity_manager.load_scenario(selected_scenario)
+            elif hasattr(self.entity_manager, 'handle_context_selection'):
+                self.entity_manager.handle_context_selection(selected_scenario)
+
+            # 6. Reset UI State
+            self.paused = False
+            if 'pause' in self.ui_manager.action_buttons:
+                self.ui_manager.action_buttons['pause'].value = "running"
+                self.ui_manager.action_buttons['pause'].update_text("PAUSE")
+
+            print(f"Successfully loaded {target_module_name} with {self.current_llm}")
+
+        except Exception as e:
+            print(f"ERROR: Failed to load simulation mode '{self.current_mode}': {e}")
+            import traceback
+            traceback.print_exc()
+            self.entity_manager = None
+
     async def run_async(self):
+        """The main asynchronous game loop."""
         clock = pygame.time.Clock()
         while self.running:
-            self.event_manager.handle_events()
+            events = pygame.event.get()
+
+            # --- Handle Events ---
+            self.event_manager.handle_events(events)
+            ui_actions = self.ui_manager.handle_events(events)
+
+            if ui_actions['load']:
+                self.load_simulation()
+
+            if ui_actions['pause']:
+                self.paused = not self.paused
+
+            # --- Update Simulation ---
             dt = clock.tick(60) / 1000.0
+            dt = min(dt, 1 / 30)  # Physics safety cap
 
-            # --- ADD THIS LINE TO FIX THE JUMP ---
-            # Cap dt to a maximum of 1/30th of a second (a 30 FPS frame).
-            # This prevents huge time steps after the API call freeze.
-            dt = min(dt, 1/30)
-            # --- END OF FIX ---
+            if not self.paused and self.entity_manager:
+                # We await because LLM calls inside update_vessels are async
+                await self.entity_manager.update_vessels(dt)
 
-            await self.update_async(dt) # Call the async update
+            # --- Render ---
             self.render()
-            await asyncio.sleep(0) # Yield control
-        # Note: You might need a different log path for your vision experiment
-        # self.entity_manager.export_log("...path_to_your_vision_log.csv")
-        pygame.quit()
+            await asyncio.sleep(0)  # Yield control to prevent UI freezing
 
-    async def update_async(self, dt):
-        await self.entity_manager.update_vessels(dt) # This is an awaited coroutine call
+        pygame.quit()
 
     def render(self):
+        """Draws the simulation layer and the UI layer."""
         self.graphics_manager.clear(WHITE)
-        self.entity_manager.draw(self.graphics_manager.screen)
-        if self.entity_manager.take_screenshot_on_next_render:
-            # ... (Your screenshot logic remains here and works for both modes)
-            filename = (f"llm_call_{self.entity_manager.llm_call_count}_time_{self.entity_manager._sim_time:.1f}s.png")
-            screenshot_dir = self.entity_manager.screenshot_dir
-            if not os.path.exists(screenshot_dir): os.makedirs(screenshot_dir)
-            filepath = os.path.join(screenshot_dir, filename)
-            pygame.image.save(self.graphics_manager.screen, filepath)
-            print(f"--- Screenshot saved: {filepath} ---")
-            self.entity_manager.take_screenshot_on_next_render = False
+
+        if self.entity_manager:
+            self.entity_manager.draw(self.graphics_manager.screen)
+
+            # Screenshot logic for logs
+            if getattr(self.entity_manager, 'take_screenshot_on_next_render', False):
+                filename = f"llm_{self.entity_manager.llm_call_count}_time_{self.entity_manager._sim_time:.1f}s.png"
+                screenshot_dir = getattr(self.entity_manager, 'screenshot_dir', 'screenshots_natural')
+                if not os.path.exists(screenshot_dir):
+                    os.makedirs(screenshot_dir)
+                filepath = os.path.join(screenshot_dir, filename)
+                pygame.image.save(self.graphics_manager.screen, filepath)
+                self.entity_manager.take_screenshot_on_next_render = False
+
+        self.ui_manager.draw(self.graphics_manager.screen)
         self.graphics_manager.update_display()

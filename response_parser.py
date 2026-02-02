@@ -38,11 +38,8 @@ def parse_llm_response_for_all(response_json_string: str):
 
         action_str = (entry.get("action") or "").lower()
 
-        # --- NEW, MORE ROBUST MAPPING LOGIC ---
-        # We check for keywords instead of exact phrases.
-        # The order is important: check for the most specific terms first.
 
-        # --- UPDATED MAPPING LOGIC ---
+        # --- KEYWORD MAPPING LOGIC ---
         if "astern" in action_str:
             m = Maneuver.PASS_ASTERN
         elif "starboard" in action_str:
@@ -59,11 +56,14 @@ def parse_llm_response_for_all(response_json_string: str):
         else:
             m = Maneuver.MAINTAIN_COURSE_SPEED
 
+        explanation = entry.get("explanation", "No explanation provided.")
+
         results.append({
             "id": vid,
             "action": entry.get("action"),
             "maneuver": m,
             "situation": entry.get("situation"),
-            "role": entry.get("role")
+            "role": entry.get("role"),
+            "explanation": explanation
         })
     return results

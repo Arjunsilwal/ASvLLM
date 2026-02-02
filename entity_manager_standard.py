@@ -11,12 +11,15 @@ from entity import Vessel, Francisco
 from scenario_generator import (head_on_scenario, cross_over_scenario,
                                 over_taking_scenario, multi_vessel_scenario,
                                 multi_vessel_scenario_2, traffic_separation_scenario)
-from response_parser import parse_llm_response_for_all
-from llm_vision_manager import LLMVisionManager
+from response_parser import Maneuver, parse_llm_response_for_all
+from llm_text_manager import LLMTextManager
 
+# Generators
+import prompts_generator.minimal_prompt as minimal_gen
+import prompts_generator.moderate_prompt as moderate_gen
+import prompts_generator.detailed_prompt as detailed_gen
 import prompts_generator.natural_language_prompt as natural_gen
 import prompts_generator.tss_prompt as tss_gen
-import prompts_generator.prompt_generator as standard_gen
 
 
 class EntityManager:
@@ -24,22 +27,16 @@ class EntityManager:
         self.game_manager = game_manager
         self.vessels: List[Vessel] = []
         self.movement_active = False
+        self.current_scenario = "none"
         self._sim_time = 0.0
         self.llm_cooldown = {}
         self.llm_cooldown_duration = 5.0
         self.pixels_per_km = 1000.0
         self.radar_range_km = 0.8
         self.llm_call_count = 0
-        self.max_history_length = 3
-        self.history_vessel_data = collections.deque(maxlen=self.max_history_length)
-        self.history_responses = collections.deque(maxlen=self.max_history_length)
-        self.vision_system = LLMVisionManager(provider=llm_provider)
-        self.current_scenario = "none"
-        self.take_screenshot_on_next_render = False
-        self.screenshot_dir = "screenshots_natural"
-        os.makedirs(self.screenshot_dir, exist_ok=True)
+        self.decision_maker = LLMTextManager(provider=llm_provider)
 
-        self.llm_log_path = "logs/llm_natural_interactions_log.csv"
+        self.llm_log_path = "logs/llm_standard_interactions_log.csv"
         self.llm_log_fieldnames = ['llm_call_id', 'simulation_time_s', 'scenario', 'prompt_type',
                                    'involved_vessels', 'explanation', 'prompt_data', 'llm_response_json']
         os.makedirs(os.path.dirname(self.llm_log_path), exist_ok=True)
@@ -47,13 +44,11 @@ class EntityManager:
             with open(self.llm_log_path, 'w', newline='', encoding='utf-8') as f:
                 csv.DictWriter(f, fieldnames=self.llm_log_fieldnames).writeheader()
 
-        self.color_map = {(255, 0, 0): "Red", (0, 0, 255): "Blue", (0, 255, 0): "Green", (255, 165, 0): "Orange",
-                          (128, 0, 128): "Purple"}
+        self.color_map = {(255, 0, 0): "Red", (0, 0, 255): "Blue", (0, 255, 0): "Green",
+                          (255, 165, 0): "Orange", (128, 0, 128): "Purple"}
 
     def load_scenario(self, selected_option):
         self.vessels.clear();
-        self.history_vessel_data.clear();
-        self.history_responses.clear()
         self._sim_time = 0.0;
         self.llm_call_count = 0
         sw, sh = self.game_manager.graphics_manager.width, self.game_manager.graphics_manager.height
@@ -110,57 +105,49 @@ class EntityManager:
                     v.in_maneuver = False;
                     v.current_maneuver = None
 
-        if to_query: await self._handle_decision(to_query)
+        if to_query: await self._handle_ai_decision(to_query)
 
-    async def _handle_decision(self, to_query):
+    async def _handle_ai_decision(self, to_query):
         for v in to_query: self.llm_cooldown[id(v)] = self._sim_time
         context = set(to_query)
         for v in to_query:
             for o in self.vessels:
                 if v is not o and self.predict_collision(v, o): context.add(o)
 
-        curr_states = [
-            {"id": id(v), "pos": (f"{v.x:.1f}", f"{v.y:.1f}"), "heading_deg": f"{math.degrees(v.heading):.1f}",
-             "speed_kmh": f"{(v.speed / self.pixels_per_km * 3600):.1f}"} for v in context]
-
-        p_type_ui = self.game_manager.ui_manager.get_value("prompt")
+        p_type = self.game_manager.ui_manager.get_value("prompt")
         if self.current_scenario == 'tss':
-            prompt = tss_gen.generate_tss_crossing_prompt(to_query, list(context), self.pixels_per_km,
-                                                          list(self.history_vessel_data), list(self.history_responses))
+            prompt = tss_gen.generate_tss_crossing_prompt(to_query, list(context), self.pixels_per_km)
             actual_p = "tss"
-        elif p_type_ui == 'natural':
-            prompt = natural_gen.generate_natural_language_prompt(to_query, list(context), self.pixels_per_km,
-                                                                  list(self.history_vessel_data),
-                                                                  list(self.history_responses))
-            actual_p = "natural"
         else:
-            prompt = standard_gen.generate_vessel_prompt(to_query, list(context), self.pixels_per_km,
-                                                         list(self.history_vessel_data), list(self.history_responses))
-            actual_p = "hybrid"
+            actual_p = p_type
+            if p_type == 'minimal':
+                prompt = minimal_gen.generate_vessel_prompt(to_query, list(context), self.pixels_per_km)
+            elif p_type == 'moderate':
+                prompt = moderate_gen.generate_vessel_prompt(to_query, list(context), self.pixels_per_km)
+            elif p_type == 'detailed':
+                prompt = detailed_gen.generate_vessel_prompt(to_query, list(context), self.pixels_per_km)
+            else:
+                prompt = natural_gen.generate_natural_language_prompt(to_query, list(context), self.pixels_per_km)
 
         # --- DEBUG VISUALIZATION ---
-        print(f"\n{'=' * 20} LEVEL 3: PROPOSED {'=' * 20}")
-        print(f"VLM CALL: IMAGE SENT + HISTORY")
+        print(f"\n{'=' * 20} LEVEL 1: STANDARD {'=' * 20}")
+        print(f"SCENARIO: {self.current_scenario} | PROMPT: {actual_p}")
         print("-" * 50);
         print(prompt);
         print("-" * 50)
 
-        raw = await self.vision_system.get_llm_decision_from_image(self.game_manager.graphics_manager.screen, prompt)
-        self.take_screenshot_on_next_render = True
+        raw = self.decision_maker.get_llm_decision_standard(prompt)
         print(f"RAW RESPONSE: {raw}")
 
         if raw:
             self.llm_call_count += 1
             parsed = parse_llm_response_for_all(raw)
             self._log_interaction(to_query, prompt, raw, parsed, actual_p)
-            if parsed:
-                self.history_vessel_data.append(curr_states);
-                self.history_responses.append(parsed)
-                for entry in parsed:
-                    v_upd = next((x for x in self.vessels if id(x) == entry['id']), None)
-                    if v_upd:
-                        v_upd.set_maneuver(entry['maneuver'])
-                        print(f"ACTION -> {self.color_map.get(v_upd.color)}: {entry['maneuver'].name}")
+            for entry in parsed:
+                v_upd = next((x for x in self.vessels if id(x) == entry['id']), None)
+                if v_upd:
+                    v_upd.set_maneuver(entry['maneuver'])
+                    print(f"ACTION -> {self.color_map.get(v_upd.color)}: {entry['maneuver'].name}")
         print(f"{'=' * 50}\n")
 
     def _log_interaction(self, vessels, prompt, raw, parsed, p_type):

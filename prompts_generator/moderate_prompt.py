@@ -1,52 +1,34 @@
 import math
 
-
 def calculate_relative_bearing(own_ship, target_ship):
-    dx = target_ship.x - own_ship.x
-    dy = target_ship.y - own_ship.y
+    dx = target_ship.x - own_ship.x; dy = target_ship.y - own_ship.y
     world_angle = math.atan2(-dy, dx)
     own_heading = (math.pi / 2 - own_ship.heading) % (2 * math.pi)
     rel = world_angle - own_heading
     return math.degrees((-rel) % (2 * math.pi))
 
-
-def generate_vessel_prompt(vessels, pixels_per_km=1):
+def generate_vessel_prompt(vessels_to_describe, all_context_vessels, pixels_per_km=1, previous_vessel_data_list=None, previous_responses=None):
     prompt = ("""
         "Ship navigation according to COLREGs.\n"
-        "For each vessel listed below, determine the situation, role, action\n"
-        "Respond ONLY with a JSON array of objects {id, situation, role, action}, **exactly one entry per vessel**. Do not produce more than one element for any given id\n\n"
-        " Do not include any additional text.\n\n"
+        "Determine the situation, role, and action. Provide a short technical explanation.\n"
+        "Format: JSON array of objects {id, situation, role, action, explanation}.\n"
+        "Explanation style: Technical phrase (e.g., 'Rule 15 - Vessel on starboard').\n"
 
-    Types:
-      - situation: "Head-on", "Crossing", or "Overtaking"
-      - role: "Give-way" or "Stand-on"
-      - action: "Alter course to starboard", "Alter course to port", "Reduce speed", or "Maintain course and speed"
-
-    Strict rules:
-      1. Head-on:  both vessels → Give-way, action → "Alter course to starboard"
-      2. Crossing: vessel seeing the other on its starboard side → Give-way; other → Stand-on
-      3. Overtaking: faster vessel → Give-way; slower → Stand-on
+    Rules:
+      1. Head-on: reciprocal courses -> Alter course to starboard.
+      2. Crossing: vessel with other on its starboard side -> Give-way.
+      3. Overtaking: faster vessel from behind -> Give-way.
 
     Vessels Data:
     """
-              )
-    for v in vessels:
+    )
+    for v in vessels_to_describe:
         speed_kmh = (v.speed / pixels_per_km * 3600) if pixels_per_km else 0
-        prompt += f"- id: {id(v)}, pos: ({v.x:.1f},{v.y:.1f}) px, heading: {math.degrees(v.heading):.1f}°, speed: {speed_kmh:.1f} km/h\n"
+        prompt += f"- id: {id(v)}, heading: {math.degrees(v.heading):.1f}°, speed: {speed_kmh:.1f} km/h\n"
         prompt += "  Other vessels:\n"
-        MOVING_THRESHOLD_KMPH = 0.1
-        for o in vessels:
+        for o in all_context_vessels:
             if o is v: continue
-            other_speed = (o.speed / pixels_per_km * 3600)
-            if other_speed < MOVING_THRESHOLD_KMPH:
-                continue
-            dx, dy = o.x - v.x, o.y - v.y
-            dist = math.hypot(dx, dy) / pixels_per_km if pixels_per_km else 0
+            dist = math.hypot(o.x - v.x, o.y - v.y) / pixels_per_km
             rb = calculate_relative_bearing(v, o)
-            sp = (o.speed / pixels_per_km * 3600) if pixels_per_km else 0
-            prompt += (
-                f"    - id: {id(o)}, pos: ({o.x:.1f},{o.y:.1f}) px, "
-                f"heading: {math.degrees(o.heading):.1f}°, speed: {sp:.1f} km/h, "
-                f"dist: {dist:.3f} km, relBearing: {rb:.1f}°\n"
-            )
+            prompt += f"    - id: {id(o)}, speed: {(o.speed / pixels_per_km * 3600):.1f} km/h, dist: {dist:.3f} km, relBrg: {rb:.1f}°\n"
     return prompt

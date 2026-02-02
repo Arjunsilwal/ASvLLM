@@ -1,51 +1,28 @@
 import pygame
 import asyncio
-import argparse
-
 from game_manager import GameManager
 
-# This is the original, synchronous main function for your RAG simulation
-def main_sync():
-    game = GameManager(800, 800, mode='rag') # Tell the GM which mode to use
-    game.run_sync() # Call the new synchronous run method
 
-# --- NEW: A SINGLE ASYNC FUNCTION ---
-# We pass the mode from the args into this function
-# --- FIX: Changed 'mode_selection' to 'mode' to match the keyword argument ---
-async def main_async(mode: str):
-    game = GameManager(800, 800, mode=mode) # Use the mode
-    await game.run_async() # Call the new asynchronous run method
-# --- END FIX ---
+async def main():
+    # Initialize pygame once at the start
+    pygame.init()
+
+    # 1000px provides enough room for the 5 dropdowns and 2 buttons in the nav bar
+    screen_width = 1000
+    screen_height = 1000
+
+    game = GameManager(screen_width, screen_height)
+
+    print("--- ASV LLM Simulator Started ---")
+    print("Use the top navigation bar to select Scenario, LLM, and Mode.")
+
+    try:
+        await game.run_async()
+    except Exception as e:
+        print(f"Critical Error in async loop: {e}")
+    finally:
+        pygame.quit()
 
 
 if __name__ == "__main__":
-    # Create a command-line argument parser
-    parser = argparse.ArgumentParser(description="Run the ASV Simulation.")
-    parser.add_argument(
-        '--mode',
-        type=str,
-        # Ensure all your modes are listed
-        choices=['rag', 'natural', 'hybrid', 'tss'],
-        default='rag',
-        help="Specify the simulation mode to run."
-    )
-    args = parser.parse_args()
-
-    # --- UPDATED LOGIC ---
-    # Launch the correct version based on the command-line argument
-    if args.mode == 'natural':
-        print("--- Running in NATURAL LANGUAGE mode (asynchronous) ---")
-        asyncio.run(main_async(mode='natural')) # This call now works
-    elif args.mode == 'hybrid':
-        print("--- Running in HYBRID mode (asynchronous) ---")
-        asyncio.run(main_async(mode='hybrid')) # This call now works
-    elif args.mode == 'tss':
-        print("--- Running in TSS mode (asynchronous) ---")
-        asyncio.run(main_async(mode='tss')) # This call now works
-    # Add your 'vision' mode back here if you still have it
-    # elif args.mode == 'vision':
-    #     print("--- Running in VISION mode (asynchronous) ---")
-    #     asyncio.run(main_async(mode='vision'))
-    else:
-        print("--- Running in RAG mode (synchronous) ---")
-        main_sync()
+    asyncio.run(main())
