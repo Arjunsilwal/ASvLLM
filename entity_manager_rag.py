@@ -13,8 +13,7 @@ from scenario_generator import (head_on_scenario, cross_over_scenario,
 # --- Import NEW Text Manager ---
 from llm_text_manager import LLMTextManager
 # --- Import prompt generators ---
-from prompts_generator.prompt_generator import generate_vessel_prompt
-from prompts_generator.tss_prompt import generate_tss_crossing_prompt
+from prompts_generator.natural_language_prompt import generate_natural_language_prompt
 from response_parser import Maneuver, parse_llm_response_for_all
 
 
@@ -248,7 +247,7 @@ class EntityManager:
 
             # Note: RAG mode does not have a "TSS" prompt, it uses the standard prompt.
             print(f"===== Generating standard prompt with history (last {len(prompt_history_data)} steps)... =====")
-            text_prompt_for_llm = generate_vessel_prompt(
+            text_prompt_for_llm = generate_natural_language_prompt(
                 to_query, list(context_vessels), self.pixels_per_km,
                 previous_vessel_data_list=prompt_history_data,
                 previous_responses=response_history_data

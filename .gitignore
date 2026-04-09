@@ -1,0 +1,256 @@
+# ============================================================================
+# ASvLLM Project - .gitignore
+# Comprehensive file exclusion for git repository
+# Last updated: April 2026
+# ============================================================================
+
+# ============================================================================
+# RESULTS & DATA (Large files, generated during experiments)
+# ============================================================================
+
+# Log files and results
+logs/
+*.csv
+!requirements.csv
+master_results.csv
+master_run_results.csv
+run_summary.csv
+*.log
+
+# Generated plots and figures
+figures/
+*.png
+*.jpg
+*.jpeg
+*.gif
+eda_*.png
+
+# Study results
+study_results/
+screenshots/
+screenshots_*/old/
+
+# ============================================================================
+# PAPER PLANNING & DOCUMENTATION (Optional - keep or remove based on preference)
+# ============================================================================
+
+# Paper drafts and planning documents
+PAPER_PLAN.md
+IMPLEMENTATION_SUMMARY.md
+STATUS_REPORT.md
+ANALYSIS_AUDIT.md
+REFACTORING_SUMMARY.md
+STAGE1_QUICKSTART.py
+paper_draft.docx
+paper_draft.tex
+manuscript.pdf
+supplementary_materials/
+
+# Meeting notes and research logs
+notes/
+research_log.txt
+TODO.md
+WORKLOG.md
+
+# ============================================================================
+# DIAGRAMS & VISUALIZATIONS
+# ============================================================================
+
+# Mermaid diagrams and flowcharts
+*.mmd
+*.mermaid
+diagrams/
+architecture_diagram.png
+pipeline_diagram.png
+*.graphviz
+*.dot
+
+# PowerPoint/Slides
+*.ppt
+*.pptx
+presentation/
+
+# ============================================================================
+# PYTHON & ENVIRONMENT
+# ============================================================================
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environment
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.python-version
+
+# Poetry / Pipenv
+poetry.lock
+Pipfile.lock
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# pyenv
+.pyenv
+
+# ============================================================================
+# IDE & EDITOR FILES
+# ============================================================================
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# PyCharm / IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+.project
+.pydevproject
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+.vim
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# Atom
+.atom
+
+# ============================================================================
+# ENVIRONMENT & SECRETS
+# ============================================================================
+
+# Environment variables (NEVER commit API keys!)
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+*.crt
+
+# ============================================================================
+# OS FILES
+# ============================================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+.directory
+.Trash-*
+
+# ============================================================================
+# IDE TEMPORARY FILES
+# ============================================================================
+
+*.bak
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# ============================================================================
+# DEBUGGING & TESTING
+# ============================================================================
+
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Debugging
+debug.log
+*.stacktrace
+
+# ============================================================================
+# BUILD & DIST
+# ============================================================================
+
+build/
+dist/
+*.egg-info/
+*.egg
+*.whl
+
+# ============================================================================
+# MISC
+# ============================================================================
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+~*
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Project-specific temporary files
+temp/
+tmp/
+test_output/
+cache/
+
+# ============================================================================
+# OPTIONAL: COMMENT OUT IF YOU WANT THESE IN GIT
+# ============================================================================
+
+# If you want to version control paper drafts, uncomment:
+# !PAPER_PLAN.md
+# !IMPLEMENTATION_SUMMARY.md
+# !STATUS_REPORT.md
+
+# If you want to version control diagrams, uncomment:
+# !diagrams/
+# !*.mmd
+# !architecture_diagram.png
+
+# ============================================================================
+# EXCEPTIONS (Files to ALWAYS track)
+# ============================================================================
+
+# Git files
+!.gitignore
+!.gitattributes
+
+# Documentation
+!README.md
+!CONTRIBUTING.md
+!LICENSE
+!requirements.txt
+
+# Source code (always included)
+!*.py
+!prompts_generator/

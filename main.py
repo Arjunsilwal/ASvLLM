@@ -1,9 +1,11 @@
 import pygame
 import asyncio
 from game_manager import GameManager
+from env_utils import load_project_env
 
 
 async def main():
+    load_project_env()
     # Initialize pygame once at the start
     pygame.init()
 

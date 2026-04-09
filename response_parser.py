@@ -1,7 +1,6 @@
 import json
 import enum
 
-
 # Maneuver enum definition
 class Maneuver(enum.IntEnum):
     MAINTAIN_COURSE_SPEED = 0
@@ -11,20 +10,19 @@ class Maneuver(enum.IntEnum):
     PASS_ASTERN = 4
     ACCELERATE = 5
 
-
 def parse_llm_response_for_all(response_json_string: str):
     """
     Parses a JSON array response from LLM and maps actions to Maneuver enum.
-    This version is more robust and uses keywords to handle responses from
-    various LLMs like Claude, GPT, and DeepSeek.
+    Uses expanded keyword matching to handle stylistic differences between models.
     """
     try:
-        data = json.loads(response_json_string)
+        # Clean up common LLM markdown artifacts if present
+        cleaned_json = response_json_string.strip().replace('```json', '').replace('```', '')
+        data = json.loads(cleaned_json)
         if not isinstance(data, list):
-            print("Warning: Expected a JSON array but got:", data)
             return []
     except json.JSONDecodeError:
-        print(f"Error: Failed to decode JSON: {response_json_string}")
+        print(f"Error: Failed to decode JSON response.")
         return []
 
     results = []
@@ -33,37 +31,37 @@ def parse_llm_response_for_all(response_json_string: str):
         try:
             vid = int(raw_id)
         except (ValueError, TypeError):
-            print(f"Warning: invalid id '{raw_id}', skipping entry")
             continue
 
         action_str = (entry.get("action") or "").lower()
 
-
-        # --- KEYWORD MAPPING LOGIC ---
-        if "astern" in action_str:
+        # --- REFINED KEYWORD MAPPING ---
+        # Order matters here: Check for specific maneuvers before generic ones.
+        if any(x in action_str for x in ["astern", "pass behind"]):
             m = Maneuver.PASS_ASTERN
-        elif "starboard" in action_str:
+        elif any(x in action_str for x in ["starboard", "right", "stbd"]):
             m = Maneuver.ALTER_COURSE_STARBOARD
-        elif "port" in action_str:
+        elif any(x in action_str for x in ["port", "left"]):
             m = Maneuver.ALTER_COURSE_PORT
-        elif "reduce" in action_str or "slow" in action_str:
+        elif any(x in action_str for x in ["reduce", "slow", "decelerate", "stop"]):
             m = Maneuver.REDUCE_SPEED
-        # --- ADD ACCELERATE CHECK ---
-        elif "accelerate" in action_str or "increase speed" in action_str:
+        elif any(x in action_str for x in ["accelerate", "increase speed", "speed up", "fast"]):
             m = Maneuver.ACCELERATE
-        elif "keep clear" in action_str or "avoid" in action_str:  # Keep fallback
-            m = Maneuver.ALTER_COURSE_STARBOARD
-        else:
+        elif any(x in action_str for x in ["maintain", "keep course", "steady"]):
             m = Maneuver.MAINTAIN_COURSE_SPEED
-
-        explanation = entry.get("explanation", "No explanation provided.")
+        else:
+            # Fallback for "Keep clear" or "Avoid collision" usually implies Starboard
+            if any(x in action_str for x in ["keep clear", "avoid"]):
+                m = Maneuver.ALTER_COURSE_STARBOARD
+            else:
+                m = Maneuver.MAINTAIN_COURSE_SPEED
 
         results.append({
             "id": vid,
             "action": entry.get("action"),
             "maneuver": m,
-            "situation": entry.get("situation"),
-            "role": entry.get("role"),
-            "explanation": explanation
+            "situation": entry.get("situation", "N/A"),
+            "role": entry.get("role", "N/A"),
+            "explanation": entry.get("explanation", "No explanation.")
         })
     return results

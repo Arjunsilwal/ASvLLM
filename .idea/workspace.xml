@@ -4,41 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d07b43d-c4b8-49b1-b420-2a3cca58eb59" name="Changes" comment="update to save details">
-      <change afterPath="$PROJECT_DIR$/batch_runner.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/clear_data.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/entity_manager_prompt_history.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/entity_manager_standard.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/environment.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/llm_text_manager.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/llm_vision_manager.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui_manager.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/validate_results.py" afterDir="false" />
+    <list default="true" id="0d07b43d-c4b8-49b1-b420-2a3cca58eb59" name="Changes" comment="File are chnaged and updated. We included Prompt and history mode to do the ablation study.">
+      <change afterPath="$PROJECT_DIR$/ablation_study.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/final_plots.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mode_prompt_study.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/batch_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/batch_runner.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/entity.py" beforeDir="false" afterPath="$PROJECT_DIR$/entity.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entity_manager.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/entity_manager2.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/entity_manager_hybrid.py" beforeDir="false" afterPath="$PROJECT_DIR$/entity_manager_rag.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/entity_manager_natural_language.py" beforeDir="false" afterPath="$PROJECT_DIR$/entity_manager_natural_language.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entity_manager_prompt_history.py" beforeDir="false" afterPath="$PROJECT_DIR$/entity_manager_prompt_history.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entity_manager_rag.py" beforeDir="false" afterPath="$PROJECT_DIR$/entity_manager_rag.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entity_manager_standard.py" beforeDir="false" afterPath="$PROJECT_DIR$/entity_manager_standard.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/event_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/event_manager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/graphics_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/langchain_rag.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/llm_text_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/llm_text_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/llm_vision_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/llm_vision_manager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modular_rag.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/plot.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/plot2.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/prompts_generator/detailed_prompt.py" beforeDir="false" afterPath="$PROJECT_DIR$/prompts_generator/detailed_prompt.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prompts_generator/minimal_prompt.py" beforeDir="false" afterPath="$PROJECT_DIR$/prompts_generator/minimal_prompt.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prompts_generator/moderate_prompt.py" beforeDir="false" afterPath="$PROJECT_DIR$/prompts_generator/moderate_prompt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pdf_files/COLREGs Quick Guide.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pdf_files/MIR2526.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pdf_files/Rules of the Road.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pdf_files/colregs_paper.pdf" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/prompts_generator/natural_language_prompt.py" beforeDir="false" afterPath="$PROJECT_DIR$/prompts_generator/natural_language_prompt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prompts_generator/prompt_generator.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/prompts_generator/tss_prompt.py" beforeDir="false" afterPath="$PROJECT_DIR$/prompts_generator/tss_prompt.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ragLLM.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rag_with_llm_api.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/response_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/response_parser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runner.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/useLLm.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vision_manager.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scenario_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/scenario_generator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/validate_results.py" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +38,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="322" />
+    <option name="cachedIndexableFilesCount" value="353" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
@@ -85,10 +77,16 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python.ablation_study.executor": "Run",
     "Python.avg_performance.executor": "Run",
+    "Python.batch_runner.executor": "Run",
     "Python.clear_data.executor": "Run",
+    "Python.final_plots.executor": "Run",
     "Python.game_manager.executor": "Run",
     "Python.main.executor": "Run",
+    "Python.master_analysis.executor": "Run",
+    "Python.merge_and_clean.executor": "Run",
+    "Python.mode_prompt_study.executor": "Run",
     "Python.plot.executor": "Run",
     "Python.plot2.executor": "Run",
     "Python.scenario_generator.executor": "Run",
@@ -102,21 +100,19 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "ai.playground.ignore.import.keys.banner.in.settings": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/arjun/Desktop/ASvLLM",
+    "last_opened_file_path": "/home/arjun/Desktop/MARS-Agent/MARS-Agent",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "memory.settings",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecapSpentCounter">
-    <option name="endsOfQuotaMs" value="1769278084844" />
-    <option name="spentUsd" value="0.040506702" />
-  </component>
-  <component name="RecapUselessUpdatesCounter">
-    <option name="suspendCountdown" value="0" />
+    <option name="endsOfQuotaMs" value="1777053628381" />
+    <option name="spentUsd" value="0.006142" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -133,8 +129,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-PY-253.29346.308" />
-        <option value="bundled-python-sdk-ca5e2b39c7df-6e1f45a539f7-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.29346.308" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-PY-253.31033.139" />
+        <option value="bundled-python-sdk-2653e85de345-6d6dccd035ac-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.31033.139" />
       </set>
     </attachedChunks>
   </component>
@@ -146,7 +142,11 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1745623683462</updated>
-      <workItem from="1768925145369" duration="27305000" />
+      <workItem from="1768925145369" duration="87225000" />
+      <workItem from="1771186727957" duration="20332000" />
+      <workItem from="1774467443006" duration="622000" />
+      <workItem from="1774548631382" duration="2460000" />
+      <workItem from="1775588666925" duration="3224000" />
     </task>
     <task id="LOCAL-00001" summary="Added files">
       <option name="closed" value="true" />
@@ -252,7 +252,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763149485452</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="File are chnaged and updated. We included Prompt and history mode to do the ablation study.">
+      <option name="closed" value="true" />
+      <created>1770075119705</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1770075119705</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -279,20 +287,18 @@
     <MESSAGE value="Bug fixes" />
     <MESSAGE value="Triangle shape added to plot" />
     <MESSAGE value="update to save details" />
-    <option name="LAST_COMMIT_MESSAGE" value="update to save details" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/entity_manager_natural_language.py</url>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="File are chnaged and updated. We included Prompt and history mode to do the ablation study." />
+    <option name="LAST_COMMIT_MESSAGE" value="File are chnaged and updated. We included Prompt and history mode to do the ablation study." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/ASvLLM$clear_data.coverage" NAME="clear_data Coverage Results" MODIFIED="1769796178156" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ASvLLM$merge_and_clean.coverage" NAME="merge_and_clean Coverage Results" MODIFIED="1771186806519" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ASvLLM$clear_data.coverage" NAME="clear_data Coverage Results" MODIFIED="1775589348008" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ASvLLM$final_plots.coverage" NAME="final_plots Coverage Results" MODIFIED="1771354009166" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ASvLLM$ablation_study.coverage" NAME="ablation_study Coverage Results" MODIFIED="1771189166004" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ASvLLM$visualize_experiment.coverage" NAME="visualize_experiment Coverage Results" MODIFIED="1769812596622" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ASvLLM$batch_runner.coverage" NAME="batch_runner Coverage Results" MODIFIED="1770150297098" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ASvLLM$master_analysis.coverage" NAME="master_analysis Coverage Results" MODIFIED="1771530638957" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ASvLLM$try.coverage" NAME="try Coverage Results" MODIFIED="1771526676051" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ASvLLM$mode_prompt_study.coverage" NAME="mode_prompt_study Coverage Results" MODIFIED="1771189353081" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

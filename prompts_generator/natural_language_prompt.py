@@ -191,9 +191,7 @@ JSON object must have keys: "id", "situation", "role", "action".
 4.  `"action"`: ONE of the exact phrases below:
     - 'Alter course to starboard'
     - 'Alter course to port'
-    - 'Reduce speed'
     - 'Pass astern'
-    - 'Accelerate'
     - 'Maintain course and speed' .
 5.  `"explanation"`: A concise, human-readable justification citing specific COLREGs rules (e.g., "Rule 15"). **Refer to vessels by their COLOR** (e.g., "The Red Vessel must yield to the Blue Vessel...").
 """
