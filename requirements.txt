@@ -1,0 +1,29 @@
+# ASvLLM Requirements
+# Core dependencies for LLM-driven maritime collision avoidance simulation
+
+# Simulation & Graphics
+pygame==2.5.2
+
+# LLM Integration (LangChain providers)
+langchain==0.3.27
+langchain-core==1.0.7
+langchain-openai==0.3.28
+langchain-anthropic==0.1.26
+
+# Data Processing & Analysis
+pandas==2.2.3
+numpy==1.26.4
+
+# Visualization
+matplotlib==3.9.2
+seaborn==0.13.2
+
+# Utilities
+python-dotenv==1.0.1
+requests==2.32.3
+
+# Optional: Development tools (uncomment as needed)
+# pytest==7.4.3
+# black==24.3.0
+# pylint==3.2.0
+# ipython==8.22.1
