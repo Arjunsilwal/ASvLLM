@@ -4,14 +4,9 @@ We thank everyone who has contributed to ASvLLM!
 
 ## Core Development Team
 
-- **[Your Name]** - Simulator design, LLM integration, analysis pipeline
+- **Arjun Silwal** - Simulator design, LLM integration, analysis pipeline
   - Core architecture: collision avoidance, prompt engineering, batch automation
-  - Email: your.email@institution.edu
-  - GitHub: [@yourusername](https://github.com/yourusername)
-
-- **[Advisor Name]** - Research direction, COLREGs domain expertise
-  - Maritime regulations, experimental methodology
-  - Institution: [Your Institution]
+  - GitHub: [@Arjunsilwal](https://github.com/Arjunsilwal)
 
 ## Community Contributors
 
@@ -47,10 +42,9 @@ If you use ASvLLM in your research, please cite as:
 ```bibtex
 @software{asvllm2026,
   title={ASvLLM: LLM-Driven COLREGs-Compliant Collision Avoidance for Autonomous Surface Vehicles},
-  author={[Your Name] and [Co-authors]},
+  author={Silwal, Arjun},
   year={2026},
-  url={https://github.com/yourusername/ASvLLM},
-  institution={[Your Institution]},
+  url={https://github.com/Arjunsilwal/ASvLLM},
   type={Software},
   version={1.0.0-beta}
 }
@@ -59,12 +53,12 @@ If you use ASvLLM in your research, please cite as:
 For academic papers citing this work:
 
 ```bibtex
-@article{yourpaper2026,
+@article{silwal2026,
   title={LLM-Based Decision Making for Autonomous Maritime Collision Avoidance},
-  author={[Your Name] and [Co-authors]},
+  author={Silwal, Arjun},
   journal={Ocean Engineering},
   year={2026},
-  note={Uses ASvLLM simulator: \url{https://github.com/yourusername/ASvLLM}}
+  note={Uses ASvLLM simulator: \url{https://github.com/Arjunsilwal/ASvLLM}}
 }
 ```
 
@@ -83,8 +77,7 @@ For academic papers citing this work:
 ## Questions?
 
 Have questions about contributing or want to be listed? Contact us:
-- Email: your.email@institution.edu
-- GitHub Issues: [ASvLLM/issues](https://github.com/yourusername/ASvLLM/issues)
-- Discussions: [ASvLLM/discussions](https://github.com/yourusername/ASvLLM/discussions)
+- GitHub Issues: [ASvLLM/issues](https://github.com/Arjunsilwal/ASvLLM/issues)
+- Discussions: [ASvLLM/discussions](https://github.com/Arjunsilwal/ASvLLM/discussions)
 
 Thank you for supporting open-source research! 🚀

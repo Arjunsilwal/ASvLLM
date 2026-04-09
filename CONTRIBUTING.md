@@ -41,7 +41,7 @@ pip install black pylint pytest  # Development tools
 
 ### 1. Report Bugs
 
-Found a bug? Please open an [Issue](https://github.com/yourusername/ASvLLM/issues) with:
+Found a bug? Please open an [Issue](https://github.com/Arjunsilwal/ASvLLM/issues) with:
 
 - **Clear title**: "Bug: [Description]"
 - **Detailed description**: What went wrong?
@@ -68,7 +68,7 @@ Environment: Python 3.10, WSL2, OpenAI API
 
 ### 2. Request Features
 
-Have an idea? Open a [Feature Request](https://github.com/yourusername/ASvLLM/issues) with:
+Have an idea? Open a [Feature Request](https://github.com/Arjunsilwal/ASvLLM/issues) with:
 
 - **Clear title**: "Feature: [Description]"
 - **Motivation**: Why is this needed?
@@ -403,9 +403,8 @@ All checks must pass before merging. If a check fails:
 
 ## Support
 
-- **Questions?** Open a [Discussion](https://github.com/yourusername/ASvLLM/discussions)
-- **Found a bug?** Open an [Issue](https://github.com/yourusername/ASvLLM/issues)
-- **Want to chat?** Reach out: your.email@institution.edu
+- **Questions?** Open a [Discussion](https://github.com/Arjunsilwal/ASvLLM/discussions)
+- **Found a bug?** Open an [Issue](https://github.com/Arjunsilwal/ASvLLM/issues)
 
 ---
 

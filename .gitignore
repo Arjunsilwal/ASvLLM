@@ -24,6 +24,18 @@ figures/
 *.jpeg
 *.gif
 eda_*.png
+comparison_*.png
+interaction_heatmap_*.png
+eval_*.png
+evaluation_*.png
+ablation_*.png
+
+# Temporary image files
+temp.jpg
+temp_for_api.jpg
+temp_vision.jpg
+temp*.png
+temp*.jpg
 
 # Study results
 study_results/
@@ -51,6 +63,25 @@ notes/
 research_log.txt
 TODO.md
 WORKLOG.md
+
+# ============================================================================
+# TEMPORARY FILES & BACKUPS
+# ============================================================================
+
+# Backup files
+*_OLD.md
+*.bak
+*.backup
+*~
+~*bak
+
+# Temporary testing files
+try.py
+test_*.py
+debug_*.py
+tmp/
+temp/
+cache/
 
 # ============================================================================
 # DIAGRAMS & VISUALIZATIONS
@@ -136,16 +167,38 @@ Pipfile.lock
 .atom
 
 # ============================================================================
-# ENVIRONMENT & SECRETS
+# ENVIRONMENT & SECRETS (CRITICAL - NEVER COMMIT API KEYS!)
 # ============================================================================
 
-# Environment variables (NEVER commit API keys!)
+# CRITICAL: Environment variables with API keys and credentials
+# NEVER commit .env files - they contain sensitive information!
 .env
 .env.local
 .env.*.local
+.env.production
+.env.development
+.env.test
+
+# Credentials and keys (NEVER commit)
 *.pem
 *.key
 *.crt
+*.p12
+*.pfx
+*.der
+*.pub
+
+# AWS/Cloud credentials
+aws_credentials
+credentials
+credentials.json
+
+# API configuration files
+api_config
+api_keys.txt
+secrets.txt
+secrets/
+.secrets/
 
 # ============================================================================
 # OS FILES
@@ -238,19 +291,25 @@ cache/
 # !architecture_diagram.png
 
 # ============================================================================
-# EXCEPTIONS (Files to ALWAYS track)
+# EXCEPTIONS (Files to ALWAYS track despite earlier patterns)
 # ============================================================================
 
-# Git files
-!.gitignore
-!.gitattributes
-
-# Documentation
+# Documentation (ALWAYS INCLUDE)
 !README.md
 !CONTRIBUTING.md
+!CODE_OF_CONDUCT.md
+!CHANGELOG.md
+!CONTRIBUTORS.md
+!QUICK_REFERENCE.md
 !LICENSE
 !requirements.txt
 
-# Source code (always included)
+# Source code and configuration (ALWAYS INCLUDE)
 !*.py
 !prompts_generator/
+!*.yml
+!*.yaml
+
+# Important reference files (ALWAYS INCLUDE)
+!.gitignore
+!.gitattributes

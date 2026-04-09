@@ -59,9 +59,9 @@ This Code of Conduct applies to:
 
 ## Enforcement
 
-Instances of unacceptable behavior may be reported by contacting the project maintainer:
+Instances of unacceptable behavior may be reported by opening an issue on GitHub:
 
-**Email**: your.email@institution.edu
+**GitHub Issues**: [Report an issue](https://github.com/Arjunsilwal/ASvLLM/issues)
 
 All complaints will be reviewed and investigated. The project team is obligated to maintain confidentiality regarding the reporter.
 
@@ -109,8 +109,7 @@ This Code of Conduct is adapted from the [Contributor Covenant](https://www.cont
 
 Have questions about this Code of Conduct? Please reach out:
 
-- **Email**: your.email@institution.edu
-- **GitHub Issues**: [Report an issue](https://github.com/yourusername/ASvLLM/issues)
-- **Discussions**: [Ask a question](https://github.com/yourusername/ASvLLM/discussions)
+- **GitHub Issues**: [Report an issue](https://github.com/Arjunsilwal/ASvLLM/issues)
+- **Discussions**: [Ask a question](https://github.com/Arjunsilwal/ASvLLM/discussions)
 
 We're here to help foster a positive, productive community. Thank you for helping make ASvLLM a welcoming place! 🤝

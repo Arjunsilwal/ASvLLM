@@ -182,8 +182,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for:
 ## Authors & Attribution
 
 **Primary Authors**: 
-- [Your Name] - Simulator design, LLM integration, analysis pipeline
-- [Advisor/Co-Author] - Research direction, COLREGs domain expertise
+- Arjun Silwal - Simulator design, LLM integration, analysis pipeline
 
 **Contributors**:
 - See [CONTRIBUTORS.md](CONTRIBUTORS.md) for community contributions
@@ -199,5 +198,5 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for:
 
 This project is licensed under the MIT License - see [LICENSE](LICENSE) file for details.
 
-Copyright © 2026 [Your Institution/Name]
+Copyright © 2026 Arjun Silwal
 All rights reserved.

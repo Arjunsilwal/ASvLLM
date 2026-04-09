@@ -335,7 +335,6 @@ terminal3: python batch_runner.py deepseek
 
 - **GitHub Issues**: Report bugs and request features
 - **GitHub Discussions**: Ask questions and share ideas
-- **Email**: your.email@institution.edu
 - **README.md**: Comprehensive troubleshooting guide
 - **CONTRIBUTING.md**: Development guidelines
 

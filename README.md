@@ -108,7 +108,7 @@ ASvLLM benchmarks LLM decision-making across:
 ### Step 1: Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/ASvLLM.git
+git clone https://github.com/Arjunsilwal/ASvLLM.git
 cd ASvLLM
 ```
 
@@ -661,7 +661,7 @@ To cite this project in your research:
 ```bibtex
 @article{asvllm2026,
   title={LLM-Driven COLREGs-Compliant Decision Making for Autonomous Surface Vessel Collision Avoidance},
-  author={[Your Names]},
+  author={Silwal, Arjun},
   journal={Ocean Engineering},
   year={2026},
   doi={10.1016/xxxx}
@@ -683,7 +683,7 @@ This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for d
 ```
 MIT License
 
-Copyright (c) 2026 [Your Organization]
+Copyright (c) 2026 Arjun Silwal
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -702,17 +702,14 @@ copies or substantial portions of the Software.
 
 ## Maintainers
 
-- **Lead**: [Your Name](https://github.com/yourusername)
-- **Contributors**: [Team members, advisors]
+- **Lead**: [Arjun Silwal](https://github.com/Arjunsilwal)
 
 ## Support
 
-- 📧 **Email**: your.email@institution.edu
-- 🐛 **Issues**: [GitHub Issues](https://github.com/yourusername/ASvLLM/issues)
-- 💬 **Discussions**: [GitHub Discussions](https://github.com/yourusername/ASvLLM/discussions)
+- 🐛 **Issues**: [GitHub Issues](https://github.com/Arjunsilwal/ASvLLM/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/Arjunsilwal/ASvLLM/discussions)
 
 ---
 
 **Last Updated**: April 2026  
-**Status**: Active Research  
-**Venue**: Ocean Engineering (Under Review)
+**Status**: Active Research  )
