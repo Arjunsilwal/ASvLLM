@@ -1,0 +1,43 @@
+{
+  "Overall Accuracy": "58.7%",
+  "Collision Rate": "34.4%",
+  "Mean Min Distance": "0.08 km",
+  "Total LLM Calls": 2200,
+  "Total Scenario Runs": 1020,
+  "Providers": [
+    "openai",
+    "deepseek",
+    "claude"
+  ],
+  "Modes": [
+    "standard",
+    "prompt_history",
+    "natural"
+  ],
+  "Scenarios": [
+    "Head-On Scenario",
+    "Cross Over Scenario",
+    "Over Taking Scenario",
+    "Multi vessel Scenario",
+    "Multi vessel Scenario 2",
+    "Multi vessel Scenario 3"
+  ],
+  "Provider Accuracy": {
+    "claude": 0.561598812553011,
+    "deepseek": 0.5950263504611331,
+    "openai": 0.6043502202643172
+  },
+  "Mode Accuracy": {
+    "natural": 0.7126108998732572,
+    "prompt_history": 0.6165381319622966,
+    "standard": 0.5581395348837209
+  },
+  "Scenario Accuracy": {
+    "Multi vessel Scenario 3": 0.7321882951653944,
+    "Head-On Scenario": 0.6910112359550562,
+    "Over Taking Scenario": 0.6289473684210526,
+    "Cross Over Scenario": 0.5483870967741935,
+    "Multi vessel Scenario": 0.53915857605178,
+    "Multi vessel Scenario 2": 0.45620667926906117
+  }
+}
