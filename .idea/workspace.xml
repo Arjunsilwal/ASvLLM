@@ -5,32 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0d07b43d-c4b8-49b1-b420-2a3cca58eb59" name="Changes" comment="File are chnaged and updated. We included Prompt and history mode to do the ablation study.">
-      <change afterPath="$PROJECT_DIR$/ablation_study.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/final_plots.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mode_prompt_study.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/batch_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/batch_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entity.py" beforeDir="false" afterPath="$PROJECT_DIR$/entity.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entity_manager_natural_language.py" beforeDir="false" afterPath="$PROJECT_DIR$/entity_manager_natural_language.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entity_manager_prompt_history.py" beforeDir="false" afterPath="$PROJECT_DIR$/entity_manager_prompt_history.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entity_manager_rag.py" beforeDir="false" afterPath="$PROJECT_DIR$/entity_manager_rag.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entity_manager_standard.py" beforeDir="false" afterPath="$PROJECT_DIR$/entity_manager_standard.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/event_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/event_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/llm_text_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/llm_text_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/llm_vision_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/llm_vision_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pdf_files/COLREGs Quick Guide.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pdf_files/MIR2526.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pdf_files/Rules of the Road.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pdf_files/colregs_paper.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/prompts_generator/natural_language_prompt.py" beforeDir="false" afterPath="$PROJECT_DIR$/prompts_generator/natural_language_prompt.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prompts_generator/prompt_generator.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/prompts_generator/tss_prompt.py" beforeDir="false" afterPath="$PROJECT_DIR$/prompts_generator/tss_prompt.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/response_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/response_parser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenario_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/scenario_generator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/validate_results.py" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/robustness_delay.py" beforeDir="false" afterPath="$PROJECT_DIR$/robustness_delay.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +89,10 @@
 }]]></component>
   <component name="RecapSpentCounter">
     <option name="endsOfQuotaMs" value="1777053628381" />
-    <option name="spentUsd" value="0.006142" />
+    <option name="spentUsd" value="0.13383727" />
+  </component>
+  <component name="RecapUselessUpdatesCounter">
+    <option name="suspendCountdown" value="0" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -146,7 +126,7 @@
       <workItem from="1771186727957" duration="20332000" />
       <workItem from="1774467443006" duration="622000" />
       <workItem from="1774548631382" duration="2460000" />
-      <workItem from="1775588666925" duration="3224000" />
+      <workItem from="1775588666925" duration="15784000" />
     </task>
     <task id="LOCAL-00001" summary="Added files">
       <option name="closed" value="true" />
@@ -292,7 +272,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ASvLLM$merge_and_clean.coverage" NAME="merge_and_clean Coverage Results" MODIFIED="1771186806519" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ASvLLM$clear_data.coverage" NAME="clear_data Coverage Results" MODIFIED="1775589348008" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ASvLLM$clear_data.coverage" NAME="clear_data Coverage Results" MODIFIED="1775854911518" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ASvLLM$final_plots.coverage" NAME="final_plots Coverage Results" MODIFIED="1771354009166" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ASvLLM$ablation_study.coverage" NAME="ablation_study Coverage Results" MODIFIED="1771189166004" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ASvLLM$visualize_experiment.coverage" NAME="visualize_experiment Coverage Results" MODIFIED="1769812596622" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
