@@ -70,9 +70,9 @@ plt.savefig("figures/ablation_mode_gain_vs_standard.png")
 # --- ABLATION 3: SCENARIO FAILURE-RATE HEATMAP ---
 failure_df = df.copy()
 failure_df['Failure_Rate'] = 1.0 - failure_df['Accuracy']
-scenario_avail = [s for s in scenario_order if s in failure_df['Scenario'].unique()]
+scenario_avail = [s for s in SCENARIO_ORDER if s in failure_df['Scenario'].unique()]
 pivot_fail = failure_df.groupby(['Scenario', 'Mode'])['Failure_Rate'].mean().unstack()
-pivot_fail = pivot_fail.reindex(index=scenario_avail, columns=[m for m in mode_order if m in pivot_fail.columns])
+pivot_fail = pivot_fail.reindex(index=scenario_avail, columns=[m for m in MODE_ORDER if m in pivot_fail.columns])
 
 plt.figure(figsize=(10, 5))
 sns.heatmap(pivot_fail, annot=True, fmt=".2f", cmap="Reds")
@@ -91,7 +91,7 @@ sns.barplot(
     y='Is_Aligned',
     hue='LLM Provider',
     order=prompt_order,
-    hue_order=[p for p in provider_order if p in alignment_df['LLM Provider'].unique()],
+    hue_order=[p for p in PROVIDER_ORDER if p in alignment_df['LLM Provider'].unique()],
     palette='rocket'
 )
 plt.title("Ablation 4: Rule-Alignment Rate by Prompt (Standard Mode)")

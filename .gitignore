@@ -43,11 +43,17 @@ screenshots/
 screenshots_*/old/
 
 # ============================================================================
-# PAPER PLANNING & DOCUMENTATION (Optional - keep or remove based on preference)
+# PAPER PLANNING & DOCUMENTATION
 # ============================================================================
 
 # Paper drafts and planning documents
 PAPER_PLAN.md
+PAPER_PUBLICATION_GUIDE_ACADEMIC.md
+MANUSCRIPT_QUICKSTART.md
+ACADEMIC_TABLES_READY.md
+DAILY_WRITING_CHECKLIST.md
+ROBUSTNESS_NOISE_GUIDE.md
+CALCULATIONS_SUMMARY.md
 IMPLEMENTATION_SUMMARY.md
 STATUS_REPORT.md
 ANALYSIS_AUDIT.md
@@ -57,6 +63,11 @@ paper_draft.docx
 paper_draft.tex
 manuscript.pdf
 supplementary_materials/
+
+# Robustness and failure analysis results
+robustness_noise_results.csv
+robustness_delay_results.csv
+failures_categorized.csv
 
 # Meeting notes and research logs
 notes/
