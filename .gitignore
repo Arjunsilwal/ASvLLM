@@ -325,3 +325,10 @@ cache/
 # Important reference files (ALWAYS INCLUDE)
 !.gitignore
 !.gitattributes
+
+# Natural Prompts Focused Analysis (Paper Results - Keep Local Only)
+master_results_natural_prompts.csv
+PUBLICATION_METRICS_NATURAL_PROMPTS.json
+MANUSCRIPT_SUMMARY_NATURAL_PROMPTS.json
+NATURAL_PROMPTS_README.md
+
